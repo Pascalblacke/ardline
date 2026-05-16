@@ -382,6 +382,46 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 }
 .btn-replay:active{transform:translateY(3px);}
 
+/* Carte participants */
+.participant-card{
+  background:rgba(255,255,255,0.07);
+  border:1.5px solid rgba(212,175,55,0.4);
+  border-radius:clamp(14px,4vw,20px);
+  padding:clamp(14px,4vw,22px) clamp(18px,5vw,30px);
+  max-width:560px;width:100%;
+  backdrop-filter:blur(8px);
+  animation:messageFade 1.2s 3.2s both;
+  text-align:center;
+}
+.participant-thanks{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(18px,5vw,26px);
+  color:var(--gold);
+  margin-bottom:10px;
+  animation:messageFade 1.2s 3.2s both;
+}
+.participant-line{
+  display:block;
+  color:rgba(255,255,255,0.88);
+  font-size:clamp(12px,3vw,15px);
+  font-weight:700;
+  line-height:1.8;
+  animation:lineReveal 0.8s both;
+}
+.participant-line:nth-child(1){animation-delay:3.8s;}
+.participant-line:nth-child(2){animation-delay:4.4s;}
+.participant-line:nth-child(3){animation-delay:5.0s;}
+.participant-line:nth-child(4){animation-delay:5.6s;}
+.participant-signature{
+  display:block;
+  margin-top:10px;
+  font-size:clamp(10px,2.5vw,13px);
+  color:rgba(212,175,55,0.75);
+  font-style:italic;
+  font-weight:700;
+  animation:lineReveal 0.8s 6.2s both;
+}
+
 /* NOTIFICATIONS */
 .notif{
   position:fixed;top:clamp(65px,15vw,80px);left:50%;transform:translateX(-50%);
@@ -566,12 +606,10 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
   .birthday-title{font-size:clamp(38px,12vw,70px)!important;line-height:1!important;}
   .birthday-num{font-size:clamp(65px,18vw,100px)!important;}
   .birthday-message{font-size:clamp(16px,4.5vw,22px)!important;margin:4px 0!important;}
-  .birthday-sub{
-    font-size:clamp(11px,3vw,14px)!important;
-    line-height:1.6!important;
-    padding:10px 14px!important;
-    margin-bottom:10px!important;
-  }
+  .participant-card{padding:10px 14px!important;border-radius:12px!important;}
+  .participant-thanks{font-size:clamp(15px,4.5vw,20px)!important;margin-bottom:6px!important;}
+  .participant-line{font-size:clamp(11px,2.8vw,13px)!important;line-height:1.6!important;}
+  .participant-signature{font-size:clamp(9px,2.3vw,11px)!important;}
   .btn-replay{
     font-size:clamp(13px,4vw,17px)!important;
     padding:11px 28px!important;
@@ -611,12 +649,13 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
   .birthday-content{gap:2px!important;padding:8px!important;}
   .birthday-title{font-size:7vw!important;}
   .birthday-num{font-size:12vw!important;}
-  .birthday-sub{
-    font-size:clamp(9px,1.8vw,12px)!important;
-    line-height:1.4!important;
-    padding:8px 12px!important;
-    margin-bottom:6px!important;
+  .participant-card{
+    padding:6px 12px!important;
+    border-radius:10px!important;
   }
+  .participant-thanks{font-size:clamp(12px,3.5vw,16px)!important;margin-bottom:4px!important;}
+  .participant-line{font-size:clamp(9px,2vw,11px)!important;line-height:1.4!important;}
+  .participant-signature{font-size:clamp(8px,1.8vw,10px)!important;margin-top:4px!important;}
   .gift-big{font-size:9vw!important;}
   .birthday-message{margin:2px 0!important;}
 
@@ -632,6 +671,42 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
   .levels-grid{grid-template-columns:repeat(6,1fr)!important;gap:8px!important;}
   #stockArea{width:clamp(120px,28vw,170px);}
 }
+
+/* ===== BANNIÈRE REPRENDRE ===== */
+#resumeBanner{
+  display:none;flex-direction:column;align-items:center;gap:8px;
+  background:linear-gradient(135deg,rgba(212,175,55,0.18),rgba(255,133,161,0.18));
+  border:1.5px solid rgba(212,175,55,0.5);border-radius:clamp(14px,4vw,20px);
+  padding:clamp(12px,3vw,18px) clamp(16px,4vw,26px);
+  max-width:min(380px,88vw);width:100%;
+  backdrop-filter:blur(8px);box-shadow:0 4px 24px rgba(212,175,55,0.2);
+  animation:cardPop 0.35s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.resume-label{
+  font-family:'Playfair Display',serif;font-size:clamp(13px,3.5vw,17px);
+  color:var(--gold);font-weight:700;text-align:center;
+}
+#resumeInfo{
+  color:rgba(247,231,206,0.85);font-size:clamp(11px,3vw,13px);
+  font-weight:700;text-align:center;line-height:1.5;
+}
+.resume-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;}
+.btn-resume{
+  background:linear-gradient(135deg,var(--gold),#B8860B);color:var(--deep);
+  font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(14px,3.5vw,17px);
+  padding:clamp(10px,2.5vw,13px) clamp(22px,5vw,32px);border-radius:50px;border:none;
+  cursor:pointer;box-shadow:0 4px 16px rgba(212,175,55,0.4);transition:all 0.15s;
+  touch-action:manipulation;
+}
+.btn-resume:active{transform:translateY(2px);}
+.btn-resume-discard{
+  background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.55);
+  font-family:'Nunito',sans-serif;font-weight:700;font-size:clamp(12px,3vw,14px);
+  padding:clamp(8px,2vw,11px) clamp(14px,3.5vw,20px);border-radius:50px;
+  border:1px solid rgba(255,255,255,0.15);cursor:pointer;transition:all 0.15s;
+  touch-action:manipulation;
+}
+.btn-resume-discard:active{background:rgba(255,0,0,0.15);}
 </style>
 </head>
 <body>
@@ -655,6 +730,16 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
     <div class="birthday-badge">🎂 Édition Spéciale 30 Ans 🎂</div>
     <button class="btn btn-play" onclick="showLevelSelect()">JOUER ! 🛍️</button>
     <div style="margin-top:12px;color:rgba(247,231,206,0.6);font-size:clamp(11px,3vw,14px);font-weight:700;text-align:center;">30 niveaux • Boutique de luxe • Cadeau surprise</div>
+
+    <!-- Bannière "Reprendre la partie" -->
+    <div id="resumeBanner">
+      <div class="resume-label">💾 Partie sauvegardée</div>
+      <div id="resumeInfo">Niveau X · 0💰 · ⏱️0:00</div>
+      <div class="resume-row">
+        <button class="btn-resume" onclick="resumeSession()">▶ Reprendre</button>
+        <button class="btn-resume-discard" onclick="discardSession()">✕ Abandonner</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -764,18 +849,24 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 <div id="birthdayScreen" class="screen">
   <canvas id="fwCanvas"></canvas>
   <div class="birthday-content">
+
+    <!-- Célébration Ardline -->
     <div class="gift-big">🎁</div>
     <div class="birthday-title">Joyeux<br>Anniversaire</div>
     <div class="birthday-num">30</div>
     <div class="birthday-message">Ardline 👑</div>
-    <div class="birthday-sub">
-      <span class="line">Tu viens de finir 30 niveaux… comme tu fêtes tes 30 ans ! 🥂</span>
-      <span class="line">Cette boutique, c'était rien qu'pour toi — sacs, parfums et tout. 👜✨</span>
-      <span class="line">Tu mérites tout ce qu'il y a de plus beau dans la vie,</span>
-      <span class="line">et encore plus de bonheur pour les 30 années qui arrivent. 🌹</span>
-      <span class="line" style="margin-top:10px;display:block;font-size:clamp(11px,3vw,14px);opacity:0.7;font-style:italic;">— Bon anniversaire Ardline, que tes 30 ans soient magnifiques ! 🎂✨</span>
+
+    <!-- Message aux participants -->
+    <div class="participant-card">
+      <div class="participant-thanks">🙏 Merci d'avoir joué !</div>
+      <span class="participant-line">Tu viens de terminer les 30 niveaux de la boutique d'Ardline — bravo ! 🛍️✨</span>
+      <span class="participant-line">Aujourd'hui on célèbre ses <strong style="color:var(--gold);">30 ans</strong>, et tu fais partie de cette fête. 🥂</span>
+      <span class="participant-line">Profite de ce moment pour lui souhaiter un bel anniversaire,</span>
+      <span class="participant-line">elle le mérite amplement. 🌹💖</span>
+      <span class="participant-signature">— Merci d'avoir participé à la surprise d'Ardline 🎂✨</span>
     </div>
-    <button class="btn-replay" onclick="showTitle()">💖 Rejouer</button>
+
+    <button class="btn-replay" onclick="showTitle()">🔁 Rejouer</button>
   </div>
 </div>
 
@@ -915,7 +1006,7 @@ function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
-function showTitle() { stopGame(); showScreen('titleScreen'); }
+function showTitle() { stopGame(); showScreen('titleScreen'); checkResumeBanner(); }
 function showLevelSelect() { buildLevelGrid(); showScreen('levelScreen'); }
 
 // ===================== LEVEL GRID =====================
@@ -950,6 +1041,7 @@ function buildLevelGrid() {
 // ===================== GAME =====================
 function startLevel(lvlId) {
   stopGame();
+  clearSession(); // ← nouvelle partie, on efface l'ancienne sauvegarde
   isPaused = false;
   const lvl = LEVELS[lvlId-1];
   gs = {
@@ -1383,6 +1475,7 @@ function togglePause() {
 
 function pauseGame() {
   isPaused = true;
+  saveSession(); // ← sauvegarde automatique à chaque pause
   document.getElementById('pauseInfo').textContent = `Niveau ${gs.level.id} • Score : ${gs.score.toLocaleString()} pts • Temps : ${Math.floor(gs.timeLeft/60)}:${(gs.timeLeft%60).toString().padStart(2,'0')}`;
   showScreen('pauseScreen');
 }
@@ -1397,6 +1490,7 @@ function endGame() {
   if (!gs || !gs.started) return;
   gs.started = false;
   stopGame();
+  clearSession(); // ← partie terminée, on efface la sauvegarde
   const stars = gs.score >= gs.level.goal*1.5 ? 3 : gs.score >= gs.level.goal ? 2 : gs.score >= gs.level.goal*0.5 ? 1 : 0;
   const prev = gameState.stars[gs.level.id] || 0;
   if (stars > prev) { gameState.stars[gs.level.id] = stars; gameState.scores[gs.level.id] = gs.score; }
@@ -1442,6 +1536,7 @@ let dressTimerInterval = null;
 
 function startDressLevel() {
   stopGame();
+  clearSession(); // ← nouvelle partie niveau 30
   dressState = {currentStep:0, done:[], timeLeft:180, running:true};
   buildDressUI();
   showScreen('dressScreen');
@@ -1519,6 +1614,7 @@ function resetDress() {
 function sendGift() {
   if (!dressState || dressState.currentStep < GIFT_STEPS.length) return;
   clearInterval(dressTimerInterval);
+  clearSession(); // ← niveau 30 terminé !
   gameState.stars[30] = 3;
   gameState.unlocked = 30;
   saveGame();
@@ -1531,9 +1627,12 @@ function tickDress() {
   const m = Math.floor(dressState.timeLeft/60);
   const s = dressState.timeLeft%60;
   document.getElementById('dressTimerDisplay').textContent = `⏱️ ${m}:${s.toString().padStart(2,'0')}`;
+  // Sauvegarde toutes les 10 secondes pendant le niveau 30
+  if (dressState.timeLeft % 10 === 0) saveDressSession();
   if (dressState.timeLeft <= 0) {
     dressState.running = false;
     clearInterval(dressTimerInterval);
+    clearSession();
     showNotif('⏰ Temps écoulé ! Recommence !');
     setTimeout(resetDress, 2000);
   }
@@ -1694,6 +1793,206 @@ function showNotif(msg) {
   notifTimeout = setTimeout(() => n && n.remove(), 2600);
 }
 
+// ===================== SESSION PERSISTENCE =====================
+// Sauvegarde la partie en cours dans localStorage (appelé à chaque pause + changement d'onglet)
+function saveSession() {
+  if (!gs || !gs.started) return;
+  try {
+    const session = {
+      type: 'game',
+      levelId: gs.level.id,
+      score: gs.score,
+      timeLeft: gs.timeLeft,
+      customersSpawned: gs.customersSpawned,
+      customersTotal: gs.customersTotal,
+      servesCount: gs.servesCount || 0,
+      powerupReady: gs.powerupReady || false,
+      savedAt: Date.now(),
+      tables: gs.tables.map(t => ({
+        id: t.id,
+        state: t.state,
+        customer: t.customer ? JSON.parse(JSON.stringify(t.customer)) : null,
+        patience: t.patience,
+        patienceMax: t.patienceMax,
+        eatTimer: t.eatTimer,
+        // On ne restaure que les articles déjà prêts ; ceux en cours de préparation repartent de zéro
+        preparedItem: (t.preparedItem && t.preparedItem.ready) ? JSON.parse(JSON.stringify(t.preparedItem)) : null
+      }))
+    };
+    localStorage.setItem('ardline_session', JSON.stringify(session));
+  } catch(e) {}
+}
+
+// Sauvegarde la partie du niveau 30 (emballage cadeau)
+function saveDressSession() {
+  if (!dressState || !dressState.running) return;
+  try {
+    const session = {
+      type: 'dress',
+      currentStep: dressState.currentStep,
+      done: [...dressState.done],
+      timeLeft: dressState.timeLeft,
+      savedAt: Date.now()
+    };
+    localStorage.setItem('ardline_session', JSON.stringify(session));
+  } catch(e) {}
+}
+
+function clearSession() {
+  try { localStorage.removeItem('ardline_session'); } catch(e) {}
+}
+
+function getSavedSession() {
+  try {
+    const s = localStorage.getItem('ardline_session');
+    return s ? JSON.parse(s) : null;
+  } catch(e) { return null; }
+}
+
+function checkResumeBanner() {
+  const session = getSavedSession();
+  const banner = document.getElementById('resumeBanner');
+  const info   = document.getElementById('resumeInfo');
+  if (!banner || !info) return;
+  if (session && session.type === 'game') {
+    const lvl = LEVELS[session.levelId - 1];
+    const m = Math.floor(session.timeLeft / 60);
+    const s = session.timeLeft % 60;
+    info.textContent = `Niveau ${session.levelId}: ${lvl ? lvl.name : ''} • ${session.score.toLocaleString()} 💰 • ⏱️ ${m}:${s.toString().padStart(2,'0')}`;
+    banner.style.display = 'flex';
+  } else if (session && session.type === 'dress') {
+    info.textContent = `Niveau 30 🎁 — Étape ${session.currentStep}/${GIFT_STEPS.length} • ⏱️ ${Math.floor(session.timeLeft/60)}:${(session.timeLeft%60).toString().padStart(2,'0')}`;
+    banner.style.display = 'flex';
+  } else {
+    banner.style.display = 'none';
+  }
+}
+
+function discardSession() {
+  clearSession();
+  document.getElementById('resumeBanner').style.display = 'none';
+  showNotif('🗑️ Partie abandonnée');
+}
+
+function resumeSession() {
+  const session = getSavedSession();
+  if (!session) { checkResumeBanner(); return; }
+
+  if (session.type === 'dress') {
+    resumeDressSession(session);
+    return;
+  }
+
+  // --- Reprendre une partie normale ---
+  const lvlId = session.levelId;
+  const lvl = LEVELS[lvlId - 1];
+  if (!lvl) { clearSession(); return; }
+
+  stopGame();
+  isPaused = false;
+
+  gs = {
+    level: lvl,
+    score: session.score,
+    timeLeft: session.timeLeft,
+    tables: [],
+    customersSpawned: session.customersSpawned,
+    customersTotal: session.customersTotal,
+    selectedTable: null,
+    started: true,
+    servesCount: session.servesCount || 0,
+    powerupReady: session.powerupReady || false
+  };
+
+  buildGameUI(lvl);
+  showScreen('gameScreen');
+  document.getElementById('hudLevel').textContent = `Niv.${lvlId}: ${lvl.name}`;
+  document.getElementById('hudGoal').textContent = `Objectif: ${lvl.goal.toLocaleString()}💰`;
+
+  // Restaurer l'état de chaque table
+  session.tables.forEach((saved, i) => {
+    if (i >= gs.tables.length) return;
+    const t = gs.tables[i];
+    t.state       = saved.state;
+    t.customer    = saved.customer;
+    t.patience    = saved.patience;
+    t.patienceMax = saved.patienceMax;
+    t.eatTimer    = saved.eatTimer;
+    t.preparedItem = saved.preparedItem || null;
+    renderTable(i);
+  });
+
+  updateScore();
+  updateTimerDisplay();
+  comboCount = 0;
+  updatePowerupBtn();
+  document.getElementById('comboDisplay').style.display = 'none';
+  closeOrderPanel();
+
+  gameTimer  = setInterval(tickGame, 1000);
+  spawnTimer = setInterval(() => trySpawnCustomer(), 4500);
+
+  showNotif('▶️ Partie reprise !');
+}
+
+function resumeDressSession(session) {
+  stopGame();
+  dressState = {
+    currentStep: session.currentStep,
+    done: [...session.done],
+    timeLeft: session.timeLeft,
+    running: true
+  };
+  buildDressUI();
+  showScreen('dressScreen');
+  buildDressStars();
+
+  // Reconstruire l'état visuel des étapes déjà faites
+  session.done.forEach((itemId, idx) => {
+    const step = GIFT_STEPS[idx];
+    if (!step) return;
+    const stepEl = document.getElementById(`gstep_${step.id}`);
+    if (stepEl) stepEl.className = 'gift-step done';
+    const itemEl = document.getElementById(`gitem_${itemId}`);
+    if (itemEl) { itemEl.className = 'choice-btn used'; itemEl.onclick = null; }
+  });
+  // Marquer l'étape courante
+  if (dressState.currentStep < GIFT_STEPS.length) {
+    const cur = GIFT_STEPS[dressState.currentStep];
+    const curEl = document.getElementById(`gstep_${cur.id}`);
+    if (curEl) curEl.className = 'gift-step current';
+    const curItem = document.getElementById(`gitem_${cur.needsItem}`);
+    if (curItem) curItem.classList.add('needed');
+  }
+  updateDressPreview();
+  // Remettre le timer
+  const m = Math.floor(session.timeLeft/60), s = session.timeLeft%60;
+  document.getElementById('dressTimerDisplay').textContent = `⏱️ ${m}:${s.toString().padStart(2,'0')}`;
+  if (dressTimerInterval) clearInterval(dressTimerInterval);
+  dressTimerInterval = setInterval(tickDress, 1000);
+  showNotif('▶️ Niveau 30 repris !');
+}
+
+// ===================== AUTO-PAUSE & AUTO-SAVE =====================
+// Quand l'utilisateur quitte l'onglet / ferme l'app → pause + sauvegarde automatique
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    if (gs && gs.started && !isPaused) {
+      pauseGame(); // pauseGame() appellera saveSession()
+    } else if (dressState && dressState.running) {
+      dressState.running = false;
+      clearInterval(dressTimerInterval);
+      saveDressSession();
+    }
+  } else {
+    // Quand l'utilisateur revient sur l'onglet : reprendre le dress-timer si besoin
+    if (dressState && !dressState.running && dressState.currentStep < GIFT_STEPS.length) {
+      dressState.running = true;
+      dressTimerInterval = setInterval(tickDress, 1000);
+    }
+  }
+});
+
 // ===================== INIT =====================
 window.onload = () => {
   // Title stars
@@ -1705,6 +2004,8 @@ window.onload = () => {
     s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${2+Math.random()*4}s;animation-delay:${Math.random()*4}s;background:rgba(212,175,55,${0.5+Math.random()*0.5});`;
     bg.appendChild(s);
   }
+  // Vérifier si une partie sauvegardée existe → afficher le bouton "Reprendre"
+  checkResumeBanner();
   // Handle back button (Android)
   window.addEventListener('popstate', () => {
     const active = document.querySelector('.screen.active');
