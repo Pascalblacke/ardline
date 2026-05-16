@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>👜 Ardline Boutique</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;700;800;900&display=swap');
+:root {
+  --gold:#D4AF37; --champagne:#F7E7CE; --rose:#FF85A1; --mauve:#C084A8;
+  --deep:#2A1640; --blush:#FFD6E0; --ivory:#FFF9F0; --emerald:#2ECC71;
+  --coral:#FF6B6B; --lilac:#E8CCFF; --dark:#1A0A2E; --cream:#FFF5E6;
+  --purple:#9B59B6; --mint:#4ECDC4;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif;background:var(--deep);user-select:none;}
+
+.screen{display:none;width:100%;height:100%;position:fixed;top:0;left:0;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;}
+.screen.active{display:flex;}
+
+/* ========== TITLE ========== */
+#titleScreen{
+  background:linear-gradient(135deg,#2A1640 0%,#4A1060 40%,#1A2A40 100%);
+  overflow:hidden;
+}
+#titleScreen::before{
+  content:'';position:absolute;width:min(600px,100vw);height:min(600px,100vw);
+  background:radial-gradient(circle,rgba(212,175,55,0.15) 0%,transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-60%);
+  animation:glowPulse 4s ease-in-out infinite;
+}
+@keyframes glowPulse{0%,100%{opacity:0.5;transform:translate(-50%,-60%) scale(1);}50%{opacity:1;transform:translate(-50%,-60%) scale(1.2);}}
+
+.floating-item{position:absolute;font-size:clamp(24px,5vw,40px);animation:floatUp linear infinite;opacity:0.5;z-index:0;pointer-events:none;}
+@keyframes floatUp{0%{transform:translateY(110vh) rotate(0deg);opacity:0.6;}100%{transform:translateY(-10vh) rotate(360deg);opacity:0;}}
+
+.title-badge-wrap{z-index:1;text-align:center;display:flex;flex-direction:column;align-items:center;gap:clamp(6px,2vw,14px);padding:20px;}
+.title-icon{font-size:clamp(50px,12vw,90px);animation:iconBounce 2s ease-in-out infinite;}
+@keyframes iconBounce{0%,100%{transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-15px) rotate(5deg);}}
+.title-logo{font-family:'Playfair Display',serif;font-size:clamp(36px,10vw,80px);color:var(--gold);text-shadow:0 0 40px rgba(212,175,55,0.6),3px 3px 0 rgba(0,0,0,0.3);line-height:1.1;}
+.title-sub{font-size:clamp(12px,3.5vw,18px);color:rgba(247,231,206,0.8);font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+.birthday-badge{
+  background:linear-gradient(135deg,var(--gold),#B8860B);color:var(--deep);
+  font-weight:900;font-size:clamp(14px,4vw,20px);padding:clamp(8px,2vw,12px) clamp(20px,5vw,35px);
+  border-radius:50px;margin:clamp(5px,2vw,12px) 0 clamp(10px,3vw,25px);
+  box-shadow:0 4px 25px rgba(212,175,55,0.5);animation:badgeShine 2s infinite;
+}
+@keyframes badgeShine{0%,100%{box-shadow:0 4px 20px rgba(212,175,55,0.4);}50%{box-shadow:0 4px 40px rgba(212,175,55,0.9);}}
+.star-dot{position:absolute;border-radius:50%;animation:twinkle linear infinite;}
+@keyframes twinkle{0%,100%{opacity:0.1;}50%{opacity:1;}}
+
+/* ========== BUTTONS ========== */
+.btn{font-family:'Nunito',sans-serif;font-weight:900;border:none;border-radius:50px;cursor:pointer;transition:all 0.15s;touch-action:manipulation;}
+.btn:active{transform:scale(0.95);}
+.btn-play{
+  background:linear-gradient(135deg,var(--gold),#B8860B);color:var(--deep);
+  font-size:clamp(18px,5vw,26px);padding:clamp(14px,3vw,20px) clamp(40px,10vw,70px);
+  box-shadow:0 6px 0 rgba(0,0,0,0.3),0 0 30px rgba(212,175,55,0.4);
+}
+.btn-play:active{transform:translateY(3px);box-shadow:0 3px 0 rgba(0,0,0,0.3);}
+.btn-sm{background:rgba(255,255,255,0.1);color:white;font-size:clamp(13px,3.5vw,16px);padding:clamp(10px,2.5vw,13px) clamp(20px,5vw,30px);border:1px solid rgba(255,255,255,0.2);}
+.btn-pink{background:linear-gradient(135deg,var(--rose),var(--mauve));color:white;font-size:clamp(15px,4vw,20px);padding:clamp(12px,3vw,16px) clamp(30px,7vw,45px);box-shadow:0 5px 0 rgba(0,0,0,0.25);}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#B8860B);color:var(--deep);font-size:clamp(15px,4vw,20px);padding:clamp(12px,3vw,16px) clamp(30px,7vw,45px);box-shadow:0 5px 0 rgba(0,0,0,0.25);}
+.btn-green{background:linear-gradient(135deg,var(--emerald),var(--mint));color:white;font-size:clamp(14px,3.5vw,18px);padding:clamp(10px,2.5vw,13px) clamp(20px,5vw,28px);box-shadow:0 4px 0 rgba(0,0,0,0.2);}
+
+/* ========== LEVEL SELECT ========== */
+#levelScreen{
+  background:linear-gradient(135deg,#1A0A2E,#2A1040,#1A2030);
+  justify-content:flex-start;overflow:hidden;
+}
+.level-header{
+  width:100%;background:rgba(212,175,55,0.1);border-bottom:1px solid rgba(212,175,55,0.3);
+  padding:clamp(10px,3vw,18px) clamp(15px,4vw,25px);display:flex;align-items:center;gap:15px;
+  flex-shrink:0;
+}
+.level-title{font-family:'Playfair Display',serif;font-size:clamp(22px,6vw,38px);color:var(--gold);}
+.level-scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding:clamp(10px,3vw,20px);-webkit-overflow-scrolling:touch;}
+.levels-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(70px,20vw,95px),1fr));gap:clamp(8px,2vw,12px);max-width:700px;margin:0 auto;}
+
+.level-btn{
+  aspect-ratio:1;border-radius:clamp(12px,3vw,18px);border:none;cursor:pointer;
+  font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(16px,4vw,20px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  transition:all 0.15s;box-shadow:0 4px 0 rgba(0,0,0,0.2);
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+}
+.level-btn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,0.2);}
+.level-btn.locked{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.25);cursor:not-allowed;border:1px solid rgba(255,255,255,0.1);}
+.level-btn.unlocked{background:linear-gradient(135deg,var(--rose),var(--mauve));color:white;}
+.level-btn.completed{background:linear-gradient(135deg,var(--gold),#B8860B);color:var(--deep);}
+.level-btn.special{background:linear-gradient(135deg,#FF85A1,#D4AF37);color:var(--deep);animation:specialPulse 2s infinite;}
+@keyframes specialPulse{0%,100%{box-shadow:0 4px 0 rgba(0,0,0,0.2),0 0 0 0 rgba(212,175,55,0.4);}50%{box-shadow:0 4px 0 rgba(0,0,0,0.2),0 0 20px 8px rgba(212,175,55,0.4);}}
+.level-btn .stars{font-size:clamp(8px,2vw,11px);margin-top:1px;}
+.level-btn .lvl-emoji{font-size:clamp(18px,5vw,26px);}
+.level-btn .lvl-num{font-size:clamp(11px,3vw,14px);}
+
+/* ========== HUD ========== */
+#hud{
+  position:absolute;top:0;left:0;right:0;height:clamp(55px,13vw,70px);
+  background:linear-gradient(90deg,var(--deep),#3A1060,var(--deep));
+  display:flex;align-items:center;justify-content:space-between;padding:0 clamp(10px,3vw,20px);
+  box-shadow:0 3px 15px rgba(0,0,0,0.3);z-index:100;border-bottom:1px solid rgba(212,175,55,0.3);
+}
+.hud-info{color:white;font-weight:800;font-size:clamp(14px,3.5vw,18px);display:flex;align-items:center;gap:clamp(4px,1.5vw,8px);}
+.hud-score{font-size:clamp(20px,5vw,28px);font-family:'Playfair Display',serif;color:var(--gold);}
+.hud-btn{
+  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;
+  font-family:'Nunito',sans-serif;font-weight:800;font-size:clamp(12px,3vw,15px);
+  padding:clamp(5px,1.5vw,8px) clamp(10px,2.5vw,16px);border-radius:20px;cursor:pointer;
+  touch-action:manipulation;
+}
+.hud-btn:active{background:rgba(255,255,255,0.2);}
+#timerBar{position:absolute;bottom:0;left:0;height:4px;background:var(--gold);transition:width 1s linear;}
+
+/* ========== GAME AREA ========== */
+#gameScreen{background:#1A0A2E;}
+#gameArea{
+  position:absolute;top:clamp(55px,13vw,70px);left:0;right:0;bottom:0;
+  display:flex;flex-direction:row;
+}
+
+/* BOUTIQUE */
+#boutiqueArea{
+  flex:1;position:relative;
+  background:linear-gradient(180deg,#FFF9F0 0%,#FFE8F0 100%);
+  overflow:hidden;
+}
+.table-zone{
+  position:absolute;background:rgba(212,175,55,0.07);
+  border:2px dashed rgba(212,175,55,0.3);border-radius:clamp(10px,3vw,16px);
+  cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  touch-action:manipulation;
+}
+.table-zone:active{background:rgba(212,175,55,0.2);}
+.table-zone.has-customer{background:rgba(78,205,196,0.08);border-color:var(--mint);}
+.table-zone.needs-order{animation:tablePulse 0.8s ease-in-out infinite;}
+@keyframes tablePulse{0%,100%{background:rgba(212,175,55,0.05);}50%{background:rgba(212,175,55,0.2);}}
+.table-zone.waiting-product{background:rgba(255,215,0,0.08);border-color:var(--gold);}
+.table-zone.happy{background:rgba(46,204,113,0.08);border-color:var(--emerald);}
+
+.customer{font-size:clamp(24px,6vw,36px);text-align:center;}
+.customer-name{font-size:clamp(9px,2.5vw,11px);font-weight:800;color:var(--deep);}
+.speech-bubble{
+  position:absolute;background:white;border-radius:10px;padding:3px 8px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.12);font-size:clamp(14px,4vw,20px);
+  top:-42px;left:50%;transform:translateX(-50%);white-space:nowrap;
+  border:2px solid rgba(212,175,55,0.4);
+}
+.speech-bubble::after{content:'';position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid white;}
+.patience-bar{width:clamp(50px,15vw,70px);height:5px;background:#eee;border-radius:3px;overflow:hidden;margin-top:2px;}
+.patience-fill{height:100%;border-radius:3px;transition:width 0.5s;background:var(--emerald);}
+
+/* STOCK (right panel) */
+#stockArea{
+  width:clamp(130px,32vw,200px);background:linear-gradient(180deg,#1A0A2E,#2A1040);
+  display:flex;flex-direction:column;padding:clamp(8px,2vw,12px);gap:clamp(6px,1.5vw,8px);
+  overflow-y:auto;-webkit-overflow-scrolling:touch;border-left:1px solid rgba(212,175,55,0.2);
+}
+.stock-title{font-family:'Playfair Display',serif;font-size:clamp(13px,3.5vw,17px);color:var(--gold);text-align:center;margin-bottom:3px;}
+.stock-item{
+  background:rgba(255,255,255,0.06);border-radius:clamp(8px,2vw,12px);padding:clamp(8px,2vw,10px) clamp(8px,2vw,10px);
+  display:flex;align-items:center;gap:clamp(6px,1.5vw,10px);cursor:pointer;
+  transition:all 0.15s;border:2px solid transparent;touch-action:manipulation;
+}
+.stock-item:active{background:rgba(212,175,55,0.2);border-color:var(--gold);}
+.stock-item.preparing{background:rgba(255,215,0,0.12);border-color:var(--gold);animation:prepPulse 1s infinite;}
+@keyframes prepPulse{0%,100%{opacity:1;}50%{opacity:0.7;}}
+.stock-item.wanted{border-color:var(--rose);background:rgba(255,133,161,0.12);animation:wantedPulse 1s infinite;}
+@keyframes wantedPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,133,161,0.4);}50%{box-shadow:0 0 10px 4px rgba(255,133,161,0.4);}}
+.stock-item.ready{background:rgba(46,204,113,0.15);border-color:var(--emerald);}
+.powerup-btn{
+  background:linear-gradient(135deg,rgba(212,175,55,0.2),rgba(255,133,161,0.2));
+  border:2px solid rgba(212,175,55,0.4);color:rgba(212,175,55,0.5);
+  font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(11px,2.8vw,14px);
+  padding:clamp(4px,1.2vw,7px) clamp(8px,2vw,13px);border-radius:20px;cursor:pointer;
+  touch-action:manipulation;transition:all 0.2s;
+}
+.powerup-btn.active{
+  background:linear-gradient(135deg,var(--gold),var(--rose));color:var(--deep);
+  border-color:var(--gold);animation:powerupReady 1.5s infinite;cursor:pointer;
+}
+@keyframes powerupReady{0%,100%{box-shadow:0 0 0 0 rgba(212,175,55,0.5);}50%{box-shadow:0 0 14px 5px rgba(212,175,55,0.5);}}
+.combo-display{
+  position:fixed;top:clamp(60px,14vw,80px);right:10px;
+  background:linear-gradient(135deg,rgba(212,175,55,0.9),rgba(255,133,161,0.9));
+  color:var(--deep);font-weight:900;font-size:clamp(13px,3.5vw,17px);
+  padding:6px 14px;border-radius:20px;z-index:300;
+  animation:comboAnim 0.3s ease-out;display:none;
+}
+@keyframes comboAnim{0%{transform:scale(0.5);}100%{transform:scale(1);}}
+.product-emoji{font-size:clamp(24px,6vw,32px);}
+.product-info{flex:1;min-width:0;}
+.product-name{color:white;font-weight:800;font-size:clamp(9px,2.5vw,12px);line-height:1.2;}
+.product-time{color:rgba(255,255,255,0.5);font-size:clamp(8px,2vw,10px);}
+.product-price{color:var(--gold);font-weight:900;font-size:clamp(10px,2.5vw,13px);}
+.prep-progress{height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-top:4px;overflow:hidden;}
+.prep-fill{height:100%;background:var(--gold);border-radius:2px;transition:width 0.3s;}
+.prep-status{font-size:clamp(8px,2vw,10px);color:rgba(255,255,255,0.4);margin-top:2px;}
+
+/* ORDER PANEL */
+#orderPanel{
+  position:absolute;bottom:clamp(10px,3vw,15px);left:50%;transform:translateX(-50%);
+  background:white;border-radius:clamp(14px,4vw,20px);padding:clamp(12px,3vw,16px) clamp(14px,4vw,20px);
+  box-shadow:0 8px 30px rgba(0,0,0,0.2);min-width:clamp(200px,60vw,300px);max-width:90%;
+  display:none;z-index:50;border:2px solid var(--gold);
+}
+#orderPanel h3{font-family:'Playfair Display',serif;color:var(--deep);font-size:clamp(15px,4vw,20px);margin-bottom:8px;text-align:center;}
+.order-items{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
+.order-item{background:var(--cream);border-radius:10px;padding:6px 12px;font-size:clamp(12px,3.5vw,15px);font-weight:700;color:var(--deep);border:2px solid var(--champagne);}
+.order-item.served{background:rgba(46,204,113,0.12);border-color:var(--emerald);color:var(--emerald);}
+.order-btn-row{display:flex;gap:8px;margin-top:10px;justify-content:center;}
+
+/* PAUSE SCREEN */
+#pauseScreen{
+  background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);z-index:400;
+}
+.pause-card{
+  background:linear-gradient(135deg,#2A1640,#1A2040);border-radius:24px;padding:clamp(25px,7vw,40px);
+  text-align:center;max-width:min(380px,90vw);box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  border:1px solid rgba(212,175,55,0.3);
+}
+.pause-title{font-family:'Playfair Display',serif;font-size:clamp(30px,8vw,48px);color:var(--gold);margin-bottom:8px;}
+.pause-info{color:rgba(255,255,255,0.7);font-size:clamp(13px,3.5vw,16px);margin-bottom:20px;}
+.pause-btn-col{display:flex;flex-direction:column;gap:12px;align-items:center;}
+
+/* FLOAT SCORE */
+.float-score{
+  position:absolute;font-size:clamp(16px,4.5vw,22px);font-weight:900;color:var(--gold);
+  pointer-events:none;z-index:200;animation:floatScore 1.5s ease-out forwards;
+  text-shadow:1px 1px 3px rgba(0,0,0,0.4);
+}
+@keyframes floatScore{0%{opacity:1;transform:translateY(0);}100%{opacity:0;transform:translateY(-70px);}}
+
+/* LEVEL COMPLETE */
+#levelComplete{background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);z-index:300;}
+.complete-card{
+  background:linear-gradient(135deg,#2A1640,#1A2040);border-radius:24px;padding:clamp(25px,7vw,40px);
+  text-align:center;max-width:min(400px,92vw);box-shadow:0 20px 60px rgba(0,0,0,0.4);
+  animation:cardPop 0.4s cubic-bezier(0.175,0.885,0.32,1.275);border:1px solid rgba(212,175,55,0.3);
+}
+@keyframes cardPop{0%{transform:scale(0);}100%{transform:scale(1);}}
+.complete-title{font-family:'Playfair Display',serif;font-size:clamp(28px,7vw,42px);color:var(--gold);}
+.complete-stars{font-size:clamp(36px,9vw,50px);margin:10px 0;}
+.complete-score{font-size:clamp(18px,5vw,24px);font-weight:900;color:white;margin:8px 0;}
+.complete-tip{font-size:clamp(13px,3.5vw,15px);color:rgba(255,255,255,0.6);margin-bottom:16px;}
+.complete-btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+
+/* ========== LEVEL 30: SPECIAL DRESS UP ========== */
+#dressScreen{
+  background:linear-gradient(135deg,#1a0a2e 0%,#2d1b33 40%,#0d0d2b 100%);
+  flex-direction:column;overflow:hidden;position:relative;
+}
+.dress-stars-bg{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;pointer-events:none;}
+.dress-hud{
+  width:100%;background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);
+  padding:clamp(10px,3vw,15px) clamp(15px,4vw,25px);display:flex;align-items:center;justify-content:space-between;z-index:10;
+  border-bottom:1px solid rgba(212,175,55,0.2);flex-shrink:0;
+}
+.dress-hud-title{font-family:'Playfair Display',serif;font-size:clamp(16px,4.5vw,24px);color:var(--gold);}
+.dress-timer-display{font-size:clamp(15px,4vw,20px);font-weight:900;color:white;background:rgba(212,175,55,0.2);padding:clamp(5px,1.5vw,8px) clamp(12px,3vw,18px);border-radius:25px;}
+
+.dress-main{display:flex;gap:clamp(10px,3vw,20px);padding:clamp(10px,3vw,18px);flex:1;align-items:flex-start;z-index:10;overflow:hidden;}
+
+.gift-card{
+  background:rgba(255,255,255,0.07);backdrop-filter:blur(10px);
+  border-radius:clamp(14px,4vw,22px);padding:clamp(14px,4vw,22px);flex-shrink:0;width:clamp(150px,38vw,230px);
+  border:1px solid rgba(212,175,55,0.25);overflow-y:auto;max-height:100%;-webkit-overflow-scrolling:touch;
+}
+.gift-title{font-family:'Playfair Display',serif;font-size:clamp(14px,3.5vw,18px);color:var(--gold);margin-bottom:clamp(8px,2vw,12px);text-align:center;}
+.gift-step{
+  display:flex;align-items:center;gap:8px;padding:clamp(7px,2vw,10px);border-radius:12px;
+  margin-bottom:6px;background:rgba(255,255,255,0.04);border:2px solid transparent;transition:all 0.3s;
+}
+.gift-step.pending{opacity:0.45;}
+.gift-step.current{background:rgba(212,175,55,0.15);border-color:var(--gold);opacity:1;animation:stepGlow 1.5s infinite;}
+@keyframes stepGlow{0%,100%{box-shadow:0 0 0 0 rgba(212,175,55,0.3);}50%{box-shadow:0 0 12px 4px rgba(212,175,55,0.3);}}
+.gift-step.done{background:rgba(46,204,113,0.12);border-color:var(--emerald);opacity:1;}
+.step-num{width:clamp(22px,6vw,28px);height:clamp(22px,6vw,28px);border-radius:50%;background:rgba(255,255,255,0.1);color:white;font-weight:900;font-size:clamp(11px,3vw,13px);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.gift-step.done .step-num{background:var(--emerald);}
+.gift-step.current .step-num{background:var(--gold);color:var(--deep);}
+.step-text{color:rgba(255,255,255,0.85);font-size:clamp(10px,2.5vw,13px);font-weight:700;line-height:1.3;}
+.step-emoji{font-size:clamp(18px,5vw,22px);flex-shrink:0;}
+
+.dress-workbench{flex:1;display:flex;flex-direction:column;align-items:center;gap:clamp(10px,3vw,16px);overflow:hidden;}
+.workbench-grid{
+  background:rgba(255,255,255,0.05);backdrop-filter:blur(8px);
+  border-radius:clamp(16px,4vw,24px);padding:clamp(12px,3vw,18px);width:100%;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(65px,18vw,90px),1fr));gap:clamp(8px,2vw,12px);
+  border:1px solid rgba(255,255,255,0.08);overflow-y:auto;-webkit-overflow-scrolling:touch;
+}
+.choice-btn{
+  background:rgba(255,255,255,0.07);border:2px solid rgba(255,255,255,0.12);
+  border-radius:clamp(12px,3vw,16px);padding:clamp(8px,2vw,12px) clamp(6px,1.5vw,10px);cursor:pointer;text-align:center;
+  transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:4px;
+  touch-action:manipulation;
+}
+.choice-btn:active{background:rgba(212,175,55,0.2);border-color:var(--gold);transform:scale(0.95);}
+.choice-btn.used{background:rgba(46,204,113,0.1);border-color:var(--emerald);opacity:0.6;cursor:default;}
+.choice-btn.needed{animation:choicePulse 1s infinite;border-color:var(--gold);}
+@keyframes choicePulse{0%,100%{transform:scale(1);}50%{transform:scale(1.06);box-shadow:0 0 14px rgba(212,175,55,0.5);}}
+.choice-emoji{font-size:clamp(26px,7vw,38px);}
+.choice-name{color:white;font-size:clamp(8px,2.2vw,11px);font-weight:700;line-height:1.2;}
+
+.preview-area{
+  background:rgba(255,255,255,0.05);border-radius:clamp(14px,4vw,20px);padding:clamp(12px,3vw,16px);
+  display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;
+  border:1px solid rgba(255,255,255,0.08);min-width:clamp(90px,22vw,130px);
+}
+.outfit-build{font-size:clamp(40px,12vw,60px);text-align:center;min-height:clamp(50px,15vw,70px);line-height:1;}
+.preview-label{color:rgba(255,255,255,0.5);font-size:clamp(9px,2.5vw,12px);font-weight:700;text-align:center;}
+.dress-action-row{display:flex;gap:10px;margin-top:4px;flex-wrap:wrap;justify-content:center;}
+.dress-action-btn{
+  font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(14px,3.5vw,17px);
+  padding:clamp(10px,2.5vw,14px) clamp(20px,5vw,30px);border-radius:50px;border:none;cursor:pointer;
+  transition:all 0.15s;box-shadow:0 4px 0 rgba(0,0,0,0.3);touch-action:manipulation;
+}
+.dress-action-btn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,0.3);}
+.btn-gift{background:linear-gradient(135deg,var(--gold),var(--rose));color:var(--deep);display:none;}
+.btn-reset-dress{background:rgba(255,255,255,0.1);color:white;}
+
+/* ========== BIRTHDAY SCREEN ========== */
+#birthdayScreen{
+  background:linear-gradient(135deg,#0d0d2b 0%,#1a0520 50%,#0a1a0d 100%);
+  z-index:500;overflow:hidden;
+}
+#fwCanvas{position:absolute;top:0;left:0;width:100%;height:100%;}
+.birthday-content{
+  z-index:10;text-align:center;display:flex;flex-direction:column;align-items:center;
+  animation:birthdayReveal 1s 2s both;padding:20px;max-width:min(700px,95vw);
+}
+@keyframes birthdayReveal{0%{opacity:0;transform:scale(0.5);}100%{opacity:1;transform:scale(1);}}
+.birthday-title{
+  font-family:'Playfair Display',serif;font-size:clamp(50px,15vw,100px);
+  background:linear-gradient(135deg,var(--gold),var(--rose),#fff,var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  background-size:300%;animation:birthdayGradient 3s linear infinite;
+  filter:drop-shadow(0 0 30px rgba(212,175,55,0.7));line-height:1.1;
+}
+@keyframes birthdayGradient{0%{background-position:0%;}100%{background-position:300%;}}
+.birthday-num{
+  font-family:'Playfair Display',serif;font-size:clamp(80px,22vw,140px);color:var(--gold);
+  filter:drop-shadow(0 0 40px rgba(212,175,55,1));animation:numPulse 1.5s ease-in-out infinite;
+}
+@keyframes numPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+.birthday-message{
+  font-size:clamp(18px,5vw,28px);font-weight:900;color:white;margin:10px 0 8px;
+  text-shadow:0 0 30px rgba(212,175,55,0.8);
+  animation:messageFade 1.2s 2.8s both;
+}
+@keyframes messageFade{0%{opacity:0;transform:translateY(20px);}100%{opacity:1;transform:translateY(0);}}
+.birthday-sub{
+  font-size:clamp(13px,3.5vw,17px);color:rgba(255,255,255,0.88);margin-bottom:20px;
+  animation:messageFade 1.2s 3.4s both;line-height:1.9;text-align:center;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);
+  border-radius:clamp(14px,4vw,20px);padding:clamp(14px,4vw,22px) clamp(16px,5vw,30px);
+  backdrop-filter:blur(6px);box-shadow:0 0 40px rgba(212,175,55,0.1);max-width:600px;
+}
+.birthday-sub .line{display:block;animation:lineReveal 0.8s both;}
+.birthday-sub .line:nth-child(1){animation-delay:3.8s;}
+.birthday-sub .line:nth-child(2){animation-delay:4.4s;}
+.birthday-sub .line:nth-child(3){animation-delay:5.0s;}
+.birthday-sub .line:nth-child(4){animation-delay:5.6s;}
+.birthday-sub .line:nth-child(5){animation-delay:6.2s;}
+@keyframes lineReveal{0%{opacity:0;transform:translateX(-15px);}100%{opacity:1;transform:translateX(0);}}
+.gift-big{font-size:clamp(70px,18vw,110px);animation:giftBounce 2s 2s ease-in-out infinite both;filter:drop-shadow(0 0 30px rgba(212,175,55,0.8));}
+@keyframes giftBounce{0%,100%{transform:translateY(0) rotate(-5deg) scale(1);}50%{transform:translateY(-20px) rotate(6deg) scale(1.08);}}
+.confetti-emoji{position:absolute;animation:confettiFall linear infinite;pointer-events:none;}
+@keyframes confettiFall{0%{transform:translateY(-50px) rotate(0deg);opacity:1;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+.heart-float{position:absolute;pointer-events:none;animation:heartRise ease-in both;}
+@keyframes heartRise{0%{opacity:1;transform:translateY(0) scale(0.5);}60%{opacity:1;}100%{opacity:0;transform:translateY(-180px) scale(1.4);}}
+.glow-ring{position:absolute;border-radius:50%;border:3px solid rgba(212,175,55,0.4);animation:ringExpand ease-out both;pointer-events:none;}
+@keyframes ringExpand{0%{transform:scale(0);opacity:0.8;}100%{transform:scale(4);opacity:0;}}
+.btn-replay{
+  background:linear-gradient(135deg,var(--gold),var(--rose));color:var(--deep);
+  font-family:'Nunito',sans-serif;font-size:clamp(15px,4vw,20px);font-weight:900;
+  padding:clamp(13px,3.5vw,16px) clamp(35px,9vw,50px);border-radius:50px;border:none;cursor:pointer;
+  box-shadow:0 5px 0 rgba(0,0,0,0.3),0 0 30px rgba(212,175,55,0.5);
+  animation:messageFade 1.2s 7s both;margin-top:8px;transition:all 0.2s;touch-action:manipulation;
+}
+.btn-replay:active{transform:translateY(3px);}
+
+/* NOTIFICATIONS */
+.notif{
+  position:fixed;top:clamp(65px,15vw,80px);left:50%;transform:translateX(-50%);
+  background:rgba(255,255,255,0.96);border-radius:50px;padding:clamp(8px,2vw,10px) clamp(16px,4vw,24px);
+  font-weight:800;font-size:clamp(12px,3.5vw,15px);z-index:999;box-shadow:0 4px 20px rgba(0,0,0,0.2);
+  animation:notifAnim 2.5s forwards;pointer-events:none;white-space:nowrap;max-width:90vw;text-overflow:ellipsis;overflow:hidden;
+}
+@keyframes notifAnim{0%{opacity:0;transform:translateX(-50%) translateY(-15px);}15%{opacity:1;transform:translateX(-50%) translateY(0);}75%{opacity:1;}100%{opacity:0;transform:translateX(-50%) translateY(-15px);}}
+
+/* SCROLLBARS */
+#stockArea::-webkit-scrollbar,#levelScroll::-webkit-scrollbar,.gift-card::-webkit-scrollbar,.workbench-grid::-webkit-scrollbar{width:4px;}
+#stockArea::-webkit-scrollbar-track,.gift-card::-webkit-scrollbar-track,.workbench-grid::-webkit-scrollbar-track{background:rgba(255,255,255,0.03);}
+#stockArea::-webkit-scrollbar-thumb,.gift-card::-webkit-scrollbar-thumb,.workbench-grid::-webkit-scrollbar-thumb{background:rgba(212,175,55,0.3);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<!-- ===== COMBO DISPLAY ===== -->
+<div class="combo-display" id="comboDisplay">🔥 COMBO x2</div>
+
+<!-- ===== TITLE SCREEN ===== -->
+<div id="titleScreen" class="screen active">
+  <div class="cake-stars-bg" id="titleStars"></div>
+  <div class="floating-item" style="left:4%;animation-duration:7s;animation-delay:0s;">👜</div>
+  <div class="floating-item" style="left:18%;animation-duration:9s;animation-delay:2s;">🌸</div>
+  <div class="floating-item" style="left:30%;animation-duration:6s;animation-delay:4s;">💄</div>
+  <div class="floating-item" style="left:70%;animation-duration:8s;animation-delay:1s;">🛍️</div>
+  <div class="floating-item" style="left:82%;animation-duration:10s;animation-delay:3s;">💎</div>
+  <div class="floating-item" style="left:92%;animation-duration:7s;animation-delay:5s;">✨</div>
+  <div class="title-badge-wrap">
+    <div class="title-icon">👜</div>
+    <div class="title-logo">Ardline Boutique</div>
+    <div class="title-sub">Sacs & Parfums de Luxe</div>
+    <div class="birthday-badge">🎂 Édition Spéciale 30 Ans 🎂</div>
+    <button class="btn btn-play" onclick="showLevelSelect()">JOUER ! 🛍️</button>
+    <div style="margin-top:12px;color:rgba(247,231,206,0.6);font-size:clamp(11px,3vw,14px);font-weight:700;text-align:center;">30 niveaux • Boutique de luxe • Cadeau surprise</div>
+  </div>
+</div>
+
+<!-- ===== LEVEL SELECT ===== -->
+<div id="levelScreen" class="screen" style="justify-content:flex-start;">
+  <div class="level-header">
+    <button class="btn btn-sm" onclick="showTitle()">← Retour</button>
+    <div class="level-title">🗺️ Niveaux</div>
+  </div>
+  <div class="level-scroll" id="levelScroll">
+    <div class="levels-grid" id="levelsGrid"></div>
+    <div style="height:20px;"></div>
+  </div>
+</div>
+
+<!-- ===== GAME SCREEN ===== -->
+<div id="gameScreen" class="screen">
+  <div id="hud">
+    <div class="hud-info">
+      <span style="color:var(--gold);">💰</span>
+      <span id="hudScore" class="hud-score">0</span>
+    </div>
+    <div class="hud-info" style="flex-direction:column;align-items:center;gap:1px;">
+      <span id="hudLevel" style="font-size:clamp(10px,2.8vw,13px);opacity:0.75;">Niveau 1</span>
+      <span id="hudGoal" style="font-size:clamp(9px,2.5vw,12px);opacity:0.6;">Objectif: 500pts</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <button class="powerup-btn" id="powerupBtn" onclick="activatePowerup()" title="Soldes Flash : booste la patience de toutes les clientes !">⚡ Soldes</button>
+      <span id="hudTimer" class="hud-info" style="font-size:clamp(16px,4.5vw,22px);">⏱️ 2:00</span>
+      <button class="hud-btn" onclick="togglePause()">⏸</button>
+    </div>
+    <div id="timerBar" style="width:100%;"></div>
+  </div>
+  <div id="gameArea">
+    <div id="boutiqueArea"></div>
+    <div id="stockArea">
+      <div class="stock-title">🏷️ Stock</div>
+      <div id="productItems"></div>
+    </div>
+  </div>
+  <div id="orderPanel">
+    <h3 id="orderTitle">Commande</h3>
+    <div class="order-items" id="orderItems"></div>
+    <div class="order-btn-row">
+      <button class="btn btn-green" onclick="serveCurrentTable()">✅ Vendre</button>
+      <button class="btn btn-sm" onclick="closeOrderPanel()">✕</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAUSE SCREEN ===== -->
+<div id="pauseScreen" class="screen">
+  <div class="pause-card">
+    <div class="pause-title">⏸ Pause</div>
+    <div class="pause-info" id="pauseInfo">Score : 0 pts</div>
+    <div class="pause-btn-col">
+      <button class="btn btn-gold" style="width:100%;max-width:220px;" onclick="resumeGame()">▶ Continuer</button>
+      <button class="btn btn-sm" style="width:100%;max-width:220px;" onclick="showLevelSelect()">🗺️ Niveaux</button>
+      <button class="btn btn-sm" style="width:100%;max-width:220px;" onclick="showTitle()">🏠 Menu</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LEVEL COMPLETE ===== -->
+<div id="levelComplete" class="screen">
+  <div class="complete-card">
+    <div class="complete-title" id="completeTitle">Niveau Réussi!</div>
+    <div class="complete-stars" id="completeStars">⭐⭐⭐</div>
+    <div class="complete-score" id="completeScore">Score: 1500</div>
+    <div class="complete-tip" id="completeTip">Excellent travail!</div>
+    <div class="complete-btn-row">
+      <button class="btn btn-gold" id="nextLevelBtn" onclick="nextLevel()">Suivant →</button>
+      <button class="btn btn-sm" onclick="replayLevel()">↺ Rejouer</button>
+      <button class="btn btn-sm" onclick="showLevelSelect()">🗺️</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LEVEL 30: GIFT WRAPPING SPECIAL ===== -->
+<div id="dressScreen" class="screen">
+  <div class="dress-stars-bg" id="dressStars"></div>
+  <div class="dress-hud">
+    <div class="dress-hud-title">🎁 Niveau 30 – Cadeau d'Ardline</div>
+    <div id="dressTimerDisplay" class="dress-timer-display">⏱️ 3:00</div>
+  </div>
+  <div class="dress-main">
+    <div class="gift-card">
+      <div class="gift-title">✨ Étapes</div>
+      <div id="giftSteps"></div>
+    </div>
+    <div class="dress-workbench">
+      <div class="workbench-grid" id="dressWorkbench"></div>
+      <div class="dress-action-row">
+        <button class="dress-action-btn btn-reset-dress" onclick="resetDress()">↺ Recommencer</button>
+        <button class="dress-action-btn btn-gift" id="btnSendGift" onclick="sendGift()">🎁 Offrir le Cadeau !</button>
+      </div>
+    </div>
+    <div class="preview-area">
+      <div class="preview-label">🎨 Cadeau</div>
+      <div class="outfit-build" id="dressBuild">🎁</div>
+      <div id="dressProgress" style="color:rgba(255,255,255,0.4);font-size:clamp(10px,2.8vw,13px);font-weight:700;margin-top:4px;text-align:center;">0 / 7 étapes</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BIRTHDAY FIREWORKS ===== -->
+<div id="birthdayScreen" class="screen">
+  <canvas id="fwCanvas"></canvas>
+  <div class="birthday-content">
+    <div class="gift-big">🎁</div>
+    <div class="birthday-title">Joyeux<br>Anniversaire</div>
+    <div class="birthday-num">30</div>
+    <div class="birthday-message">Ardline 👑</div>
+    <div class="birthday-sub">
+      <span class="line">Tu viens de finir 30 niveaux… comme tu fêtes tes 30 ans ! 🥂</span>
+      <span class="line">Cette boutique, c'était rien qu'pour toi — sacs, parfums et tout. 👜✨</span>
+      <span class="line">Tu mérites tout ce qu'il y a de plus beau dans la vie,</span>
+      <span class="line">et encore plus de bonheur pour les 30 années qui arrivent. 🌹</span>
+      <span class="line" style="margin-top:10px;display:block;font-size:clamp(11px,3vw,14px);opacity:0.7;font-style:italic;">— Bon anniversaire Ardline, que tes 30 ans soient magnifiques ! 🎂✨</span>
+    </div>
+    <button class="btn-replay" onclick="showTitle()">💖 Rejouer</button>
+  </div>
+</div>
+
+<script>
+// ===================== LEVELS DATA =====================
+const LEVELS = [
+  // 1-5: Petite boutique
+  {id:1,name:"Ouverture",emoji:"🏪",tables:2,customers:6,time:90,goal:300,menu:[{id:"bag1",name:"Pochette Rose",emoji:"👛",price:50,prepTime:2},{id:"perf1",name:"Eau Florale",emoji:"🌸",price:70,prepTime:2}]},
+  {id:2,name:"Premières Clientes",emoji:"🛍️",tables:2,customers:8,time:100,goal:500,menu:[{id:"bag2",name:"Sac Bandoulière",emoji:"👜",price:90,prepTime:3},{id:"perf2",name:"Rose de Minuit",emoji:"🌹",price:110,prepTime:3},{id:"bag1",name:"Pochette Rose",emoji:"👛",price:50,prepTime:2}]},
+  {id:3,name:"Heure de Pointe",emoji:"⚡",tables:3,customers:10,time:110,goal:800,menu:[{id:"perf3",name:"Jasmin Doré",emoji:"🌼",price:130,prepTime:4},{id:"bag3",name:"Cabas Chic",emoji:"🎒",price:120,prepTime:4},{id:"perf1",name:"Eau Florale",emoji:"🌸",price:70,prepTime:2}]},
+  {id:4,name:"Clientes VIP",emoji:"👑",tables:3,customers:12,time:120,goal:1100,menu:[{id:"bag4",name:"Sac Cuir",emoji:"💼",price:180,prepTime:5},{id:"perf4",name:"Oud Mystère",emoji:"🌙",price:200,prepTime:5},{id:"bag2",name:"Sac Bandoulière",emoji:"👜",price:90,prepTime:3}]},
+  {id:5,name:"Week-end Chargé",emoji:"📅",tables:4,customers:15,time:130,goal:1500,menu:[{id:"bag1",name:"Pochette Rose",emoji:"👛",price:50,prepTime:2},{id:"bag3",name:"Cabas Chic",emoji:"🎒",price:120,prepTime:4},{id:"perf5",name:"Vanille Précieuse",emoji:"🍦",price:160,prepTime:5}]},
+  // 6-10: Boutique intermédiaire
+  {id:6,name:"Collection Printemps",emoji:"🌷",tables:3,customers:12,time:130,goal:1800,menu:[{id:"bag5",name:"Tote Bag Floral",emoji:"🌺",price:140,prepTime:4},{id:"perf6",name:"Bouquet Printanier",emoji:"💐",price:150,prepTime:4},{id:"bag4",name:"Sac Cuir",emoji:"💼",price:180,prepTime:5}]},
+  {id:7,name:"Vente Exclusive",emoji:"💎",tables:3,customers:14,time:140,goal:2200,menu:[{id:"bag6",name:"Mini Sac Doré",emoji:"✨",price:220,prepTime:6},{id:"perf7",name:"Diamant Rose",emoji:"💎",price:250,prepTime:6},{id:"bag5",name:"Tote Bag Floral",emoji:"🌺",price:140,prepTime:4}]},
+  {id:8,name:"Collaboration Mode",emoji:"👗",tables:4,customers:14,time:140,goal:2600,menu:[{id:"bag7",name:"Clutch Soirée",emoji:"👝",price:190,prepTime:5},{id:"perf8",name:"Séduction Noire",emoji:"🖤",price:210,prepTime:6},{id:"bag6",name:"Mini Sac Doré",emoji:"✨",price:220,prepTime:6}]},
+  {id:9,name:"Soirée Glamour",emoji:"🥂",tables:4,customers:16,time:150,goal:3000,menu:[{id:"bag8",name:"Sac Croco",emoji:"🐊",price:350,prepTime:8},{id:"perf9",name:"Champagne Rosé",emoji:"🍾",price:280,prepTime:6},{id:"bag7",name:"Clutch Soirée",emoji:"👝",price:190,prepTime:5}]},
+  {id:10,name:"Grand Rush",emoji:"🔥",tables:5,customers:18,time:150,goal:3800,menu:[{id:"bag9",name:"Sac Weekend",emoji:"🧳",price:200,prepTime:5},{id:"perf10",name:"Fleur Sauvage",emoji:"🌿",price:220,prepTime:6},{id:"bag8",name:"Sac Croco",emoji:"🐊",price:350,prepTime:8}]},
+  // 11-15: Luxe
+  {id:11,name:"Maison de Couture",emoji:"⭐",tables:4,customers:14,time:150,goal:4500,menu:[{id:"bag10",name:"Sac Haute Couture",emoji:"👜",price:400,prepTime:9},{id:"perf11",name:"Or Liquide",emoji:"🏆",price:380,prepTime:9},{id:"bag6",name:"Mini Sac Doré",emoji:"✨",price:220,prepTime:6}]},
+  {id:12,name:"Défilé Privé",emoji:"💫",tables:4,customers:16,time:160,goal:5200,menu:[{id:"bag11",name:"Kelly Premium",emoji:"💍",price:450,prepTime:10},{id:"perf12",name:"Iris Impérial",emoji:"🌷",price:350,prepTime:8},{id:"bag10",name:"Sac Haute Couture",emoji:"👜",price:400,prepTime:9}]},
+  {id:13,name:"Influenceuses",emoji:"📸",tables:5,customers:16,time:160,goal:6000,menu:[{id:"bag12",name:"Sac Couleur Pop",emoji:"🎨",price:320,prepTime:8},{id:"perf13",name:"Candy Glam",emoji:"🍬",price:290,prepTime:7},{id:"bag11",name:"Kelly Premium",emoji:"💍",price:450,prepTime:10}]},
+  {id:14,name:"Gala de Mode",emoji:"🎩",tables:5,customers:18,time:170,goal:7000,menu:[{id:"bag13",name:"Maxi Shopper",emoji:"🛒",price:280,prepTime:7},{id:"perf14",name:"Nuit Étoilée",emoji:"🌠",price:320,prepTime:8},{id:"bag11",name:"Kelly Premium",emoji:"💍",price:450,prepTime:10}]},
+  {id:15,name:"Boutique 5 Étoiles",emoji:"🏆",tables:6,customers:20,time:170,goal:8500,menu:[{id:"bag8",name:"Sac Croco",emoji:"🐊",price:350,prepTime:8},{id:"bag11",name:"Kelly Premium",emoji:"💍",price:450,prepTime:10},{id:"perf15",name:"Sillage Absolu",emoji:"💜",price:400,prepTime:9},{id:"bag13",name:"Maxi Shopper",emoji:"🛒",price:280,prepTime:7}]},
+  // 16-20: Challenge
+  {id:16,name:"Vente Flash",emoji:"⚡",tables:5,customers:18,time:160,goal:9000,menu:[{id:"bag9",name:"Sac Weekend",emoji:"🧳",price:200,prepTime:5},{id:"bag12",name:"Sac Couleur Pop",emoji:"🎨",price:320,prepTime:8},{id:"perf16",name:"Musc Blanc",emoji:"🕊️",price:300,prepTime:7}]},
+  {id:17,name:"Fashion Week",emoji:"🎉",tables:5,customers:20,time:160,goal:10000,menu:[{id:"bag14",name:"Sac Graffiti",emoji:"🖌️",price:260,prepTime:6},{id:"perf17",name:"Street Chic",emoji:"🏙️",price:280,prepTime:7},{id:"bag12",name:"Sac Couleur Pop",emoji:"🎨",price:320,prepTime:8}]},
+  {id:18,name:"Collection Capsule",emoji:"🌟",tables:6,customers:20,time:170,goal:11500,menu:[{id:"bag15",name:"Sac Édition Limitée",emoji:"🔮",price:380,prepTime:9},{id:"perf18",name:"Prestige Absolu",emoji:"🌙",price:350,prepTime:8},{id:"bag14",name:"Sac Graffiti",emoji:"🖌️",price:260,prepTime:6}]},
+  {id:19,name:"Nuit du Luxe",emoji:"🌙",tables:6,customers:22,time:180,goal:13000,menu:[{id:"bag11",name:"Kelly Premium",emoji:"💍",price:450,prepTime:10},{id:"perf19",name:"Ambre Nocturne",emoji:"🕯️",price:420,prepTime:10},{id:"bag15",name:"Sac Édition Limitée",emoji:"🔮",price:380,prepTime:9}]},
+  {id:20,name:"Le Grand Service",emoji:"👸",tables:7,customers:24,time:180,goal:15000,menu:[{id:"bag11",name:"Kelly Premium",emoji:"💍",price:450,prepTime:10},{id:"perf19",name:"Ambre Nocturne",emoji:"🕯️",price:420,prepTime:10},{id:"bag15",name:"Sac Édition Limitée",emoji:"🔮",price:380,prepTime:9},{id:"perf20",name:"La Quintessence",emoji:"💎",price:500,prepTime:11}]},
+  // 21-25: Master
+  {id:21,name:"Boutique Parisienne",emoji:"🗼",tables:5,customers:18,time:160,goal:16000,menu:[{id:"bag11",name:"Kelly Premium",emoji:"💍",price:450,prepTime:9},{id:"perf20",name:"La Quintessence",emoji:"💎",price:500,prepTime:10},{id:"bag16",name:"Sac Paris Chic",emoji:"🗼",price:420,prepTime:9}]},
+  {id:22,name:"Showroom VIP",emoji:"🏛️",tables:6,customers:20,time:170,goal:17500,menu:[{id:"bag17",name:"Sac Platine",emoji:"🤍",price:480,prepTime:10},{id:"perf21",name:"Or Blanc",emoji:"⭐",price:460,prepTime:10},{id:"bag16",name:"Sac Paris Chic",emoji:"🗼",price:420,prepTime:9}]},
+  {id:23,name:"Soirée Gala",emoji:"🎭",tables:6,customers:22,time:170,goal:19000,menu:[{id:"bag18",name:"Clutch Diamant",emoji:"💠",price:520,prepTime:10},{id:"perf22",name:"Extravagance Rose",emoji:"🌸",price:490,prepTime:10},{id:"bag17",name:"Sac Platine",emoji:"🤍",price:480,prepTime:10}]},
+  {id:24,name:"Collection Anniversaire",emoji:"🎂",tables:7,customers:22,time:180,goal:21000,menu:[{id:"bag18",name:"Clutch Diamant",emoji:"💠",price:520,prepTime:10},{id:"bag19",name:"Sac 30 Ans",emoji:"🎁",price:550,prepTime:11},{id:"perf23",name:"Trente Roses",emoji:"🌹",price:530,prepTime:11}]},
+  {id:25,name:"Prestige Absolu",emoji:"♾️",tables:7,customers:24,time:180,goal:23000,menu:[{id:"bag19",name:"Sac 30 Ans",emoji:"🎁",price:550,prepTime:11},{id:"perf24",name:"L'Intemporel",emoji:"♾️",price:560,prepTime:11},{id:"bag18",name:"Clutch Diamant",emoji:"💠",price:520,prepTime:10}]},
+  // 26-29: Final challenge
+  {id:26,name:"Reine de la Mode",emoji:"👑",tables:6,customers:22,time:175,goal:25000,menu:[{id:"bag20",name:"Birkin Rose",emoji:"💗",price:600,prepTime:11},{id:"perf25",name:"Couture Royale",emoji:"👑",price:580,prepTime:11},{id:"bag19",name:"Sac 30 Ans",emoji:"🎁",price:550,prepTime:11}]},
+  {id:27,name:"Luxe Suprême",emoji:"🌟",tables:7,customers:24,time:180,goal:27500,menu:[{id:"bag20",name:"Birkin Rose",emoji:"💗",price:600,prepTime:11},{id:"perf26",name:"Or & Diamant",emoji:"🔱",price:620,prepTime:12},{id:"perf25",name:"Couture Royale",emoji:"👑",price:580,prepTime:11}]},
+  {id:28,name:"Éternité",emoji:"✨",tables:7,customers:26,time:185,goal:30000,menu:[{id:"bag21",name:"Sac Légendaire",emoji:"🌟",price:650,prepTime:12},{id:"perf27",name:"Éternité Pure",emoji:"✨",price:640,prepTime:12},{id:"bag20",name:"Birkin Rose",emoji:"💗",price:600,prepTime:11}]},
+  {id:29,name:"La Dernière Avant...",emoji:"🎯",tables:7,customers:28,time:190,goal:33000,menu:[{id:"bag21",name:"Sac Légendaire",emoji:"🌟",price:650,prepTime:12},{id:"perf28",name:"Ardline Signature",emoji:"💫",price:700,prepTime:12},{id:"bag20",name:"Birkin Rose",emoji:"💗",price:600,prepTime:11}]},
+  // 30: Special
+  {id:30,name:"Le Cadeau d'Ardline",emoji:"🎁",special:true}
+];
+
+// ===================== GIFT WRAPPING (Level 30) =====================
+const GIFT_STEPS = [
+  {id:'bag',    name:'Choisir le sac',        emoji:'👜', needsItem:'bag',    display:'👜'},
+  {id:'tissue', name:'Papier de soie',         emoji:'🧻', needsItem:'tissue', display:'👜🎀'},
+  {id:'ribbon', name:'Attacher le ruban',       emoji:'🎀', needsItem:'ribbon', display:'🎁'},
+  {id:'card',   name:'Écrire la carte',          emoji:'💌', needsItem:'card',   display:'🎁💌'},
+  {id:'perf',   name:'Ajouter le parfum',        emoji:'🌹', needsItem:'perf',   display:'🎁🌹'},
+  {id:'wrap',   name:'Emballer avec amour',      emoji:'💝', needsItem:'wrap',   display:'🎁💝'},
+  {id:'bow',    name:'Poser le grand nœud ✨',   emoji:'✨', needsItem:'bow',    display:'🎁✨'},
+];
+const GIFT_ITEMS = [
+  {id:'bag',    name:'Sac',      emoji:'👜'},
+  {id:'tissue', name:'Soie',     emoji:'🧻'},
+  {id:'ribbon', name:'Ruban',    emoji:'🎀'},
+  {id:'card',   name:'Carte',    emoji:'💌'},
+  {id:'perf',   name:'Parfum',   emoji:'🌹'},
+  {id:'wrap',   name:'Papier',   emoji:'💝'},
+  {id:'bow',    name:'Grand Nœud',emoji:'✨'},
+];
+const GIFT_PREVIEWS = ['🎁','👜','👜🎀','🎁','🎁💌','🎁🌹','🎁💝','🎁✨'];
+
+// ===================== STATE =====================
+let gameState = {
+  unlocked: 1,
+  scores: {},
+  stars: {}
+};
+// Load from localStorage
+try {
+  const saved = localStorage.getItem('ardline_save');
+  if (saved) gameState = Object.assign(gameState, JSON.parse(saved));
+} catch(e){}
+
+function saveGame() {
+  try { localStorage.setItem('ardline_save', JSON.stringify(gameState)); } catch(e){}
+}
+
+let gs = null; // game session
+let isPaused = false;
+
+// ===================== TABLE POSITIONS (% based, responsive) =====================
+const TABLE_POSITIONS_MAP = {
+  2: [{x:10,y:15,w:35,h:35},{x:55,y:15,w:35,h:35}],
+  3: [{x:5,y:10,w:28,h:32},{x:36,y:10,w:28,h:32},{x:67,y:10,w:28,h:32}],
+  4: [{x:5,y:8,w:28,h:30},{x:38,y:8,w:28,h:30},{x:5,y:52,w:28,h:30},{x:38,y:52,w:28,h:30}],
+  5: [{x:5,y:8,w:28,h:30},{x:36,y:8,w:28,h:30},{x:67,y:8,w:28,h:30},{x:5,y:52,w:28,h:30},{x:36,y:52,w:28,h:30}],
+  6: [{x:5,y:8,w:28,h:30},{x:36,y:8,w:28,h:30},{x:67,y:8,w:28,h:30},{x:5,y:52,w:28,h:30},{x:36,y:52,w:28,h:30},{x:67,y:52,w:28,h:30}],
+  7: [{x:5,y:8,w:26,h:28},{x:33,y:8,w:26,h:28},{x:61,y:8,w:26,h:28},{x:5,y:50,w:26,h:28},{x:33,y:50,w:26,h:28},{x:61,y:50,w:26,h:28},{x:18,y:2,w:26,h:28}],
+};
+
+const CUSTOMER_NAMES = ["Aicha","Fatou","Mariama","Kadiatou","Bintou","Aminata","Coumba","Yacine","Nabou","Ramatoulaye","Sophie","Emma","Léa","Chloé","Mia","Ines","Sara","Jade","Clara","Nour","Khadija","Rokhaya","Astou","Diata","Seynabou"];
+
+// Customer types with different patience & tip multipliers (inspired by Diner Dash)
+const CUSTOMER_TYPES = [
+  {type:'casual',    emoji:'👩',     label:'Cliente',     patienceRange:[28,38], tipMult:1.0, freq:40},
+  {type:'vip',       emoji:'👸',     label:'VIP ⭐',      patienceRange:[18,25], tipMult:1.8, freq:15},
+  {type:'influencer',emoji:'💁‍♀️',   label:'Influenceuse',patienceRange:[14,20], tipMult:1.5, freq:15},
+  {type:'business',  emoji:'👩‍💼',   label:'Business',    patienceRange:[22,30], tipMult:1.2, freq:22},
+  {type:'senior',    emoji:'👵',     label:'Senior',      patienceRange:[36,48], tipMult:0.9, freq:8},
+];
+
+function pickCustomerType(lvlId) {
+  // Early levels: mostly casual, later levels introduce more VIP/influencer
+  const types = CUSTOMER_TYPES.map(ct => {
+    let freq = ct.freq;
+    if (lvlId >= 10 && ct.type === 'vip') freq += 8;
+    if (lvlId >= 15 && ct.type === 'influencer') freq += 6;
+    if (lvlId >= 20 && ct.type === 'vip') freq += 5;
+    return {...ct, freq};
+  });
+  const total = types.reduce((s,t) => s+t.freq, 0);
+  let r = Math.random() * total;
+  for (const ct of types) { r -= ct.freq; if (r <= 0) return ct; }
+  return types[0];
+}
+
+let gameTimer = null;
+let spawnTimer = null;
+let prepTimers = {};
+
+// Combo system
+let comboCount = 0;
+let comboTimeout = null;
+const COMBO_WINDOW = 4500; // ms to chain serves
+
+// Power-up state
+let powerupActive = false;
+let powerupTimer = null;
+
+// ===================== SCREENS =====================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function showTitle() { stopGame(); showScreen('titleScreen'); }
+function showLevelSelect() { buildLevelGrid(); showScreen('levelScreen'); }
+
+// ===================== LEVEL GRID =====================
+function buildLevelGrid() {
+  const grid = document.getElementById('levelsGrid');
+  grid.innerHTML = '';
+  for (let i = 1; i <= 30; i++) {
+    const lvl = LEVELS[i-1];
+    const btn = document.createElement('button');
+    const isUnlocked = i <= gameState.unlocked;
+    const stars = gameState.stars[i] || 0;
+    if (!isUnlocked) {
+      btn.className = 'level-btn locked';
+      btn.innerHTML = `<span class="lvl-emoji">🔒</span><span class="lvl-num">${i}</span>`;
+    } else if (i === 30) {
+      btn.className = 'level-btn special';
+      btn.innerHTML = `<span class="lvl-emoji">🎁</span><span class="lvl-num">30</span>`;
+      btn.onclick = () => startDressLevel();
+    } else if (stars > 0) {
+      btn.className = 'level-btn completed';
+      btn.innerHTML = `<span class="lvl-emoji">${lvl.emoji}</span><span class="lvl-num">${i}</span><span class="stars">${'⭐'.repeat(stars)}</span>`;
+      btn.onclick = () => startLevel(i);
+    } else {
+      btn.className = 'level-btn unlocked';
+      btn.innerHTML = `<span class="lvl-emoji">${lvl.emoji}</span><span class="lvl-num">${i}</span>`;
+      btn.onclick = () => startLevel(i);
+    }
+    grid.appendChild(btn);
+  }
+}
+
+// ===================== GAME =====================
+function startLevel(lvlId) {
+  stopGame();
+  isPaused = false;
+  const lvl = LEVELS[lvlId-1];
+  gs = {
+    level: lvl,
+    score: 0,
+    timeLeft: lvl.time,
+    tables: [],
+    customersSpawned: 0,
+    customersTotal: lvl.customers,
+    selectedTable: null,
+    started: true,
+    servesCount: 0,
+    powerupReady: false
+  };
+  buildGameUI(lvl);
+  showScreen('gameScreen');
+  document.getElementById('hudLevel').textContent = `Niv.${lvlId}: ${lvl.name}`;
+  document.getElementById('hudGoal').textContent = `Objectif: ${lvl.goal.toLocaleString()}💰`;
+  updateScore(0);
+  updateTimerDisplay();
+  comboCount = 0;
+  updatePowerupBtn();
+  document.getElementById('comboDisplay').style.display = 'none';
+  spawnInitialCustomers();
+  gameTimer = setInterval(tickGame, 1000);
+  spawnTimer = setInterval(() => trySpawnCustomer(), 4500);
+}
+
+function buildGameUI(lvl) {
+  const rest = document.getElementById('boutiqueArea');
+  rest.innerHTML = '';
+  gs.tables = [];
+  const count = Math.min(lvl.tables, 7);
+  const positions = TABLE_POSITIONS_MAP[count] || TABLE_POSITIONS_MAP[6];
+  for (let i = 0; i < count; i++) {
+    const pos = positions[i];
+    const zone = document.createElement('div');
+    zone.className = 'table-zone';
+    zone.style.cssText = `left:${pos.x}%;top:${pos.y}%;width:${pos.w}%;height:${pos.h}%;`;
+    zone.id = `table_${i}`;
+    zone.innerHTML = `<span style="font-size:clamp(22px,6vw,32px);">🛍️</span><span style="font-size:clamp(9px,2.5vw,11px);color:#bbb;font-weight:700;">Zone ${i+1}</span>`;
+    zone.onclick = () => clickTable(i);
+    rest.appendChild(zone);
+    gs.tables.push({id:i,state:'empty',customer:null,order:null,patience:30,patienceMax:30,eatTimer:0});
+  }
+  const menuDiv = document.getElementById('productItems');
+  menuDiv.innerHTML = '';
+  lvl.menu.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'stock-item';
+    div.id = `prod_${item.id}`;
+    div.innerHTML = `
+      <span class="product-emoji">${item.emoji}</span>
+      <div class="product-info">
+        <div class="product-name">${item.name}</div>
+        <div class="product-time">⏱️ ${item.prepTime}s</div>
+        <div class="prep-progress"><div class="prep-fill" id="pf_${item.id}" style="width:0%"></div></div>
+        <div class="prep-status" id="ps_${item.id}">Disponible</div>
+      </div>
+      <div class="product-price">${item.price}💰</div>
+    `;
+    div.onclick = () => prepProduct(item.id);
+    menuDiv.appendChild(div);
+  });
+}
+
+function spawnInitialCustomers() {
+  const tables = gs.tables.filter(t => t.state === 'empty');
+  const toFill = Math.min(tables.length, Math.floor(gs.tables.length * 0.5) + 1);
+  for (let i = 0; i < toFill; i++) {
+    if (tables[i] && gs.customersSpawned < gs.customersTotal) spawnAtTable(tables[i].id);
+  }
+}
+
+function trySpawnCustomer() {
+  if (!gs || !gs.started || isPaused) return;
+  const canSpawnMore = gs.customersSpawned < gs.customersTotal;
+  if (!canSpawnMore) return;
+  const empty = gs.tables.filter(t => t.state === 'empty');
+  if (empty.length > 0) {
+    const t = empty[Math.floor(Math.random() * empty.length)];
+    spawnAtTable(t.id);
+  }
+}
+
+function spawnAtTable(tableId) {
+  const t = gs.tables[tableId];
+  if (!t || t.state !== 'empty') return;
+  const menu = gs.level.menu;
+
+  // TRUE random: pick a random item, with guaranteed diversity
+  // Track what's been ordered on other tables to avoid everyone getting the same
+  const currentOrders = gs.tables
+    .filter(tb => tb.state !== 'empty' && tb.customer)
+    .map(tb => tb.customer.item.id);
+  
+  // Weight items less if already ordered by many; ensures variety
+  const weights = menu.map(item => {
+    const count = currentOrders.filter(id => id === item.id).length;
+    return Math.max(0.2, 1 - count * 0.35);
+  });
+  const totalW = weights.reduce((s,w) => s+w, 0);
+  let r = Math.random() * totalW;
+  let item = menu[menu.length - 1];
+  for (let i = 0; i < menu.length; i++) {
+    r -= weights[i];
+    if (r <= 0) { item = menu[i]; break; }
+  }
+
+  const name = CUSTOMER_NAMES[Math.floor(Math.random() * CUSTOMER_NAMES.length)];
+  const ct = pickCustomerType(gs.level.id);
+  const [pMin, pMax] = ct.patienceRange;
+  const patience = pMin + Math.floor(Math.random() * (pMax - pMin));
+
+  t.state = 'needs-order';
+  t.customer = {name, emoji: ct.emoji, label: ct.label, type: ct.type, tipMult: ct.tipMult, item};
+  t.patience = patience;
+  t.patienceMax = patience;
+  gs.customersSpawned++;
+  renderTable(tableId);
+}
+
+function renderTable(tableId) {
+  const t = gs.tables[tableId];
+  const zone = document.getElementById(`table_${tableId}`);
+  if (!zone) return;
+  zone.className = 'table-zone';
+  if (t.state === 'empty') {
+    zone.innerHTML = `<span style="font-size:clamp(22px,6vw,32px);">🛍️</span><span style="font-size:clamp(9px,2.5vw,11px);color:#bbb;font-weight:700;">Zone ${tableId+1}</span>`;
+    return;
+  }
+  const pct = Math.round((t.patience/t.patienceMax)*100);
+  const pColor = pct > 60 ? '#2ECC71' : pct > 30 ? '#F39C12' : '#E74C3C';
+  let bubble = t.state==='needs-order'?'🛒':t.state==='waiting-product'?t.customer.item.emoji:t.state==='happy'?'😍':'';
+  zone.innerHTML = `
+    <div class="speech-bubble">${bubble}</div>
+    <span class="customer">${t.customer.emoji}</span>
+    <span class="customer-name">${t.customer.label ? t.customer.label+' · ' : ''}${t.customer.name}</span>
+    <div class="patience-bar"><div class="patience-fill" style="width:${pct}%;background:${pColor};"></div></div>
+  `;
+  if (t.state === 'needs-order') zone.classList.add('needs-order','has-customer');
+  else if (t.state === 'waiting-product') zone.classList.add('waiting-product','has-customer');
+  else if (t.state === 'happy') zone.classList.add('happy','has-customer');
+}
+
+function clickTable(tableId) {
+  const t = gs.tables[tableId];
+  if (t.state === 'empty') return;
+  if (t.state === 'needs-order') {
+    t.state = 'waiting-product';
+    renderTable(tableId);
+    showOrderPanel(tableId);
+  } else if (t.state === 'waiting-product') {
+    showOrderPanel(tableId);
+  } else if (t.state === 'happy') {
+    addScore(80, document.getElementById(`table_${tableId}`));
+    showNotif('💖 Pourboire ! +80💰');
+    t.state = 'empty'; t.customer = null;
+    renderTable(tableId);
+  }
+  gs.selectedTable = tableId;
+}
+
+let selectedTableId = null;
+function showOrderPanel(tableId) {
+  selectedTableId = tableId;
+  const t = gs.tables[tableId];
+  const panel = document.getElementById('orderPanel');
+  document.getElementById('orderTitle').textContent = `${t.customer.label ? t.customer.label+' ' : ''}${t.customer.name} veut :`;
+  const items = document.getElementById('orderItems');
+  items.innerHTML = '';
+  const item = t.customer.item;
+  const isReady = t.preparedItem && t.preparedItem.id === item.id && t.preparedItem.ready;
+  const div = document.createElement('div');
+  div.className = 'order-item' + (isReady ? ' served' : '');
+  div.innerHTML = `${item.emoji} ${item.name} ${isReady ? '✅' : '⏳'}`;
+  items.appendChild(div);
+  panel.style.display = 'block';
+  updateStockUI(); // highlight what she wants in the stock panel
+}
+
+function closeOrderPanel() {
+  document.getElementById('orderPanel').style.display = 'none';
+  selectedTableId = null;
+  updateStockUI();
+}
+
+function serveCurrentTable() {
+  if (selectedTableId === null) return;
+  const t = gs.tables[selectedTableId];
+  if (!t || t.state !== 'waiting-product') { closeOrderPanel(); return; }
+  const item = t.customer.item;
+
+  // Each table has its own prepared slot (t.preparedItem), not global
+  if (!t.preparedItem || t.preparedItem.id !== item.id || !t.preparedItem.ready) {
+    showNotif(`⚠️ ${item.name} pas encore prêt pour cette table !`);
+    return;
+  }
+
+  const pct = t.patience / t.patienceMax;
+  const tipMult = t.customer.tipMult || 1.0;
+  const base = Math.round(item.price * (1 + pct * 0.5) * tipMult);
+
+  // Combo bonus
+  if (comboTimeout) clearTimeout(comboTimeout);
+  comboCount++;
+  let comboBonus = 0;
+  let comboMsg = '';
+  if (comboCount >= 4) {
+    comboBonus = Math.round(base * 0.5);
+    comboMsg = ` 🔥 COMBO x${comboCount} +${comboBonus}💰`;
+  } else if (comboCount >= 2) {
+    comboBonus = Math.round(base * 0.2);
+    comboMsg = ` ✨ COMBO x${comboCount} +${comboBonus}💰`;
+  }
+  comboTimeout = setTimeout(() => { comboCount = 0; showCombo(0); }, COMBO_WINDOW);
+  showCombo(comboCount);
+
+  const total = base + comboBonus;
+  addScore(total, document.getElementById(`table_${selectedTableId}`));
+
+  // VIP/influencer special messages
+  let serveMsg = `${item.emoji} Vendu à ${t.customer.name} ! +${total}💰`;
+  if (t.customer.type === 'vip') serveMsg = `👸 VIP satisfaite ! +${total}💰`;
+  if (t.customer.type === 'influencer') serveMsg = `💁‍♀️ Story postée ! +${total}💰`;
+  if (comboMsg) serveMsg += comboMsg;
+  showNotif(serveMsg);
+
+  // Clear this table's prepared item
+  t.preparedItem = null;
+  updateStockUI();
+
+  t.state = 'happy';
+  t.eatTimer = 6;
+  renderTable(selectedTableId);
+  closeOrderPanel();
+
+  // Charge powerup after 5 serves
+  gs.servesCount = (gs.servesCount || 0) + 1;
+  if (gs.servesCount % 5 === 0) {
+    gs.powerupReady = true;
+    updatePowerupBtn();
+    showNotif('⚡ Soldes Flash disponible !');
+  }
+}
+
+function prepProduct(prodId) {
+  // Must have a selected table waiting for this item
+  if (selectedTableId === null) {
+    showNotif('💡 Clique d\'abord sur une cliente !');
+    return;
+  }
+  const t = gs.tables[selectedTableId];
+  if (!t || t.state !== 'waiting-product') {
+    showNotif('💡 Clique d\'abord sur une cliente !');
+    return;
+  }
+  if (t.customer.item.id !== prodId) {
+    showNotif(`❌ Elle veut ${t.customer.item.emoji} ${t.customer.item.name} !`);
+    return;
+  }
+  if (t.preparedItem && !t.preparedItem.ready) {
+    showNotif('⏳ Déjà en préparation pour cette table !');
+    return;
+  }
+  if (t.preparedItem && t.preparedItem.ready) {
+    showNotif('✅ Déjà prêt ! Clique Vendre.');
+    return;
+  }
+
+  const item = gs.level.menu.find(m => m.id === prodId);
+  if (!item) return;
+
+  t.preparedItem = {id: prodId, item, progress: 0, ready: false};
+  updateStockUI();
+
+  const tId = selectedTableId; // capture for closure
+  const total = item.prepTime;
+  let elapsed = 0;
+  const timerId = `t${tId}_${prodId}`;
+  if (prepTimers[timerId]) clearInterval(prepTimers[timerId]);
+  prepTimers[timerId] = setInterval(() => {
+    if (!gs || !gs.started) { clearInterval(prepTimers[timerId]); return; }
+    if (isPaused) return;
+    elapsed++;
+    const pct = Math.min(100, Math.round((elapsed/total)*100));
+    const tb = gs.tables[tId];
+    if (tb && tb.preparedItem && tb.preparedItem.id === prodId) {
+      tb.preparedItem.progress = pct;
+    }
+    updateStockUI();
+    if (elapsed >= total) {
+      clearInterval(prepTimers[timerId]);
+      const tb2 = gs.tables[tId];
+      if (tb2 && tb2.preparedItem && tb2.preparedItem.id === prodId) {
+        tb2.preparedItem.ready = true;
+        tb2.preparedItem.progress = 100;
+      }
+      updateStockUI();
+      showNotif(`${item.emoji} ${item.name} prêt pour table ${tId+1} !`);
+    }
+  }, 1000);
+}
+
+function updateStockUI() {
+  // Show prep state of currently selected table's item in the stock panel
+  gs.level.menu.forEach(item => {
+    const div = document.getElementById(`prod_${item.id}`);
+    const fill = document.getElementById(`pf_${item.id}`);
+    const status = document.getElementById(`ps_${item.id}`);
+    if (!div) return;
+    div.className = 'stock-item';
+
+    // Find any table waiting for this item
+    const matchTable = selectedTableId !== null ? gs.tables[selectedTableId] : null;
+    const prep = (matchTable && matchTable.preparedItem && matchTable.preparedItem.id === item.id)
+      ? matchTable.preparedItem : null;
+
+    // Highlight if this is what selected table wants
+    const isWanted = matchTable && matchTable.customer && matchTable.customer.item.id === item.id;
+    if (isWanted && !prep) div.classList.add('wanted');
+
+    if (!prep) { fill.style.width='0%'; status.textContent = isWanted ? '👆 Préparer' : 'Disponible'; }
+    else if (prep.ready) { div.classList.add('ready'); fill.style.width='100%'; status.textContent='✅ Prêt !'; }
+    else { div.classList.add('preparing'); fill.style.width=prep.progress+'%'; status.textContent=`Prépa... ${prep.progress}%`; }
+  });
+}
+
+function tickGame() {
+  if (!gs || !gs.started || isPaused) return;
+  gs.timeLeft--;
+  updateTimerDisplay();
+  gs.tables.forEach((t,i) => {
+    if (t.state === 'waiting-product' || t.state === 'needs-order') {
+      t.patience = Math.max(0, t.patience - 1);
+      renderTable(i);
+      if (t.patience === 0) {
+        t.state = 'empty'; t.customer = null;
+        renderTable(i);
+        addScore(-80, null);
+        showNotif('😤 Une cliente est partie ! -80💰');
+      }
+    } else if (t.state === 'happy') {
+      t.eatTimer--;
+      if (t.eatTimer <= 0) {
+        t.state = 'empty'; t.customer = null;
+        renderTable(i);
+      }
+    }
+  });
+  // Check if all customers have come AND no one is on a table → end level
+  const allSpawned = gs.customersSpawned >= gs.customersTotal;
+  const nooneLeft = gs.tables.every(t => t.state === 'empty');
+  if (allSpawned && nooneLeft) {
+    endGame();
+    return;
+  }
+  if (gs.timeLeft <= 0) endGame();
+}
+
+function updateTimerDisplay() {
+  if (!gs) return;
+  const m = Math.floor(gs.timeLeft/60);
+  const s = gs.timeLeft%60;
+  document.getElementById('hudTimer').textContent = `⏱️ ${m}:${s.toString().padStart(2,'0')}`;
+  const pct = (gs.timeLeft/gs.level.time)*100;
+  document.getElementById('timerBar').style.width = pct+'%';
+  document.getElementById('timerBar').style.background = pct > 50 ? '#D4AF37' : pct > 25 ? '#FF8C42' : '#FF6B6B';
+}
+
+function addScore(pts, elem) {
+  if (!gs) return;
+  gs.score = Math.max(0, gs.score + pts);
+  document.getElementById('hudScore').textContent = gs.score.toLocaleString();
+  if (elem && pts > 0) {
+    const fl = document.createElement('div');
+    fl.className = 'float-score';
+    fl.textContent = `+${pts}💰`;
+    const rect = elem.getBoundingClientRect();
+    fl.style.left = (rect.left + rect.width/2 - 25) + 'px';
+    fl.style.top = (rect.top + 10) + 'px';
+    document.body.appendChild(fl);
+    setTimeout(() => fl.remove(), 1600);
+  }
+}
+
+function updateScore() {
+  if (!gs) return;
+  document.getElementById('hudScore').textContent = gs.score.toLocaleString();
+}
+
+// ===================== POWERUP & COMBO =====================
+function updatePowerupBtn() {
+  const btn = document.getElementById('powerupBtn');
+  if (!btn) return;
+  if (gs && gs.powerupReady) btn.classList.add('active');
+  else btn.classList.remove('active');
+}
+
+function activatePowerup() {
+  if (!gs || !gs.powerupReady || !gs.started || isPaused) return;
+  gs.powerupReady = false;
+  updatePowerupBtn();
+  // Boost patience of all waiting customers by 10s
+  gs.tables.forEach((t,i) => {
+    if (t.state !== 'empty' && t.customer) {
+      t.patience = Math.min(t.patienceMax, t.patience + 10);
+      renderTable(i);
+    }
+  });
+  showNotif('⚡ SOLDES FLASH ! Toutes les clientes patientent +10s !');
+}
+
+function showCombo(count) {
+  const el = document.getElementById('comboDisplay');
+  if (!el) return;
+  if (count < 2) { el.style.display='none'; return; }
+  el.textContent = count >= 4 ? `🔥 MEGA COMBO x${count}` : `✨ COMBO x${count}`;
+  el.style.display = 'block';
+  el.style.animation = 'none';
+  void el.offsetWidth;
+  el.style.animation = 'comboAnim 0.3s ease-out';
+}
+
+// ===================== PAUSE =====================
+function togglePause() {
+  if (!gs || !gs.started) return;
+  if (isPaused) resumeGame();
+  else pauseGame();
+}
+
+function pauseGame() {
+  isPaused = true;
+  document.getElementById('pauseInfo').textContent = `Niveau ${gs.level.id} • Score : ${gs.score.toLocaleString()} pts • Temps : ${Math.floor(gs.timeLeft/60)}:${(gs.timeLeft%60).toString().padStart(2,'0')}`;
+  showScreen('pauseScreen');
+}
+
+function resumeGame() {
+  isPaused = false;
+  showScreen('gameScreen');
+}
+
+// ===================== END GAME =====================
+function endGame() {
+  if (!gs || !gs.started) return;
+  gs.started = false;
+  stopGame();
+  const stars = gs.score >= gs.level.goal*1.5 ? 3 : gs.score >= gs.level.goal ? 2 : gs.score >= gs.level.goal*0.5 ? 1 : 0;
+  const prev = gameState.stars[gs.level.id] || 0;
+  if (stars > prev) { gameState.stars[gs.level.id] = stars; gameState.scores[gs.level.id] = gs.score; }
+  if (stars > 0 && gs.level.id >= gameState.unlocked) {
+    gameState.unlocked = Math.min(30, gs.level.id + 1);
+  }
+  saveGame();
+  showLevelComplete(stars);
+}
+
+function showLevelComplete(stars) {
+  const titles = ['Presque... 💔','Bon travail ! 👍','Super ! 🌟','Parfait ! 💎'];
+  const tips = ['Prépare les produits en avance !','Jongle entre clientes et stock !','Excellent service !','Score parfait ! Quelle vendeuse !'];
+  document.getElementById('completeTitle').textContent = titles[stars];
+  document.getElementById('completeStars').textContent = stars > 0 ? '⭐'.repeat(stars)+'☆'.repeat(3-stars) : '💔';
+  document.getElementById('completeScore').textContent = `${gs.score.toLocaleString()} / ${gs.level.goal.toLocaleString()} 💰`;
+  document.getElementById('completeTip').textContent = tips[stars];
+  const nextBtn = document.getElementById('nextLevelBtn');
+  if (nextBtn) nextBtn.style.display = gs.level.id < 30 ? '' : 'none';
+  showScreen('levelComplete');
+}
+
+function nextLevel() {
+  const next = gs ? gs.level.id + 1 : 1;
+  if (next === 30) { startDressLevel(); return; }
+  if (next <= 30) startLevel(next);
+  else showLevelSelect();
+}
+function replayLevel() { if (gs) startLevel(gs.level.id); }
+
+function stopGame() {
+  if (gameTimer) { clearInterval(gameTimer); gameTimer = null; }
+  if (spawnTimer) { clearInterval(spawnTimer); spawnTimer = null; }
+  Object.keys(prepTimers).forEach(k => clearInterval(prepTimers[k]));
+  prepTimers = {};
+  if (gs) gs.started = false;
+  isPaused = false;
+}
+
+// ===================== LEVEL 30: GIFT WRAPPING =====================
+let dressState = null;
+let dressTimerInterval = null;
+
+function startDressLevel() {
+  stopGame();
+  dressState = {currentStep:0, done:[], timeLeft:180, running:true};
+  buildDressUI();
+  showScreen('dressScreen');
+  buildDressStars();
+  if (dressTimerInterval) clearInterval(dressTimerInterval);
+  dressTimerInterval = setInterval(tickDress, 1000);
+}
+
+function buildDressUI() {
+  const stepsDiv = document.getElementById('giftSteps');
+  stepsDiv.innerHTML = '';
+  GIFT_STEPS.forEach((step,i) => {
+    const div = document.createElement('div');
+    div.className = 'gift-step' + (i===0?' current':' pending');
+    div.id = `gstep_${step.id}`;
+    div.innerHTML = `<div class="step-num">${i+1}</div><span class="step-emoji">${step.emoji}</span><span class="step-text">${step.name}</span>`;
+    stepsDiv.appendChild(div);
+  });
+  const wb = document.getElementById('dressWorkbench');
+  wb.innerHTML = '';
+  GIFT_ITEMS.forEach(item => {
+    const div = document.createElement('div');
+    const isNeeded = item.id === GIFT_STEPS[0].needsItem;
+    div.className = 'choice-btn' + (isNeeded ? ' needed' : '');
+    div.id = `gitem_${item.id}`;
+    div.innerHTML = `<span class="choice-emoji">${item.emoji}</span><span class="choice-name">${item.name}</span>`;
+    div.onclick = () => addGiftItem(item.id);
+    wb.appendChild(div);
+  });
+  updateDressPreview();
+}
+
+function addGiftItem(itemId) {
+  if (!dressState || !dressState.running) return;
+  const step = GIFT_STEPS[dressState.currentStep];
+  if (!step) return;
+  if (itemId !== step.needsItem) {
+    showNotif(`❌ Mauvais choix ! Il faut : ${step.emoji} ${step.name}`);
+    return;
+  }
+  dressState.done.push(itemId);
+  const stepEl = document.getElementById(`gstep_${step.id}`);
+  if (stepEl) stepEl.className = 'gift-step done';
+  const itemEl = document.getElementById(`gitem_${itemId}`);
+  if (itemEl) { itemEl.className = 'choice-btn used'; itemEl.onclick = null; }
+  dressState.currentStep++;
+  if (dressState.currentStep < GIFT_STEPS.length) {
+    const next = GIFT_STEPS[dressState.currentStep];
+    const nextEl = document.getElementById(`gstep_${next.id}`);
+    if (nextEl) nextEl.className = 'gift-step current';
+    const nextItem = document.getElementById(`gitem_${next.needsItem}`);
+    if (nextItem) nextItem.classList.add('needed');
+    showNotif(`✨ Parfait ! ${dressState.currentStep}/${GIFT_STEPS.length}`);
+  }
+  updateDressPreview();
+  if (dressState.currentStep >= GIFT_STEPS.length) {
+    document.getElementById('btnSendGift').style.display = 'inline-block';
+    showNotif('🎁 Le cadeau est prêt ! Offre-le à Ardline !');
+    dressState.running = false;
+    clearInterval(dressTimerInterval);
+  }
+}
+
+function updateDressPreview() {
+  const step = Math.min(dressState ? dressState.currentStep : 0, GIFT_PREVIEWS.length-1);
+  document.getElementById('dressBuild').textContent = GIFT_PREVIEWS[step];
+  document.getElementById('dressProgress').textContent = `${step} / ${GIFT_STEPS.length} étapes`;
+}
+
+function resetDress() {
+  clearInterval(dressTimerInterval);
+  startDressLevel();
+}
+
+function sendGift() {
+  if (!dressState || dressState.currentStep < GIFT_STEPS.length) return;
+  clearInterval(dressTimerInterval);
+  gameState.stars[30] = 3;
+  gameState.unlocked = 30;
+  saveGame();
+  showBirthdayScreen();
+}
+
+function tickDress() {
+  if (!dressState || !dressState.running) return;
+  dressState.timeLeft--;
+  const m = Math.floor(dressState.timeLeft/60);
+  const s = dressState.timeLeft%60;
+  document.getElementById('dressTimerDisplay').textContent = `⏱️ ${m}:${s.toString().padStart(2,'0')}`;
+  if (dressState.timeLeft <= 0) {
+    dressState.running = false;
+    clearInterval(dressTimerInterval);
+    showNotif('⏰ Temps écoulé ! Recommence !');
+    setTimeout(resetDress, 2000);
+  }
+}
+
+function buildDressStars() {
+  const container = document.getElementById('dressStars');
+  container.innerHTML = '';
+  for (let i = 0; i < 80; i++) {
+    const star = document.createElement('div');
+    star.className = 'star-dot';
+    const size = Math.random() * 3 + 1;
+    star.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${2+Math.random()*4}s;animation-delay:${Math.random()*4}s;background:rgba(212,175,55,${0.4+Math.random()*0.6});`;
+    container.appendChild(star);
+  }
+}
+
+// ===================== BIRTHDAY =====================
+function showBirthdayScreen() {
+  showScreen('birthdayScreen');
+  spawnConfetti();
+  spawnFloatingHearts();
+  startFireworks();
+  spawnGlowRings();
+}
+
+function spawnConfetti() {
+  const screen = document.getElementById('birthdayScreen');
+  screen.querySelectorAll('.confetti-emoji').forEach(e => e.remove());
+  const confettis = ['🎊','🎉','⭐','✨','🌟','💖','🎈','🎀','🎁','💎','💫','🌹','❤️','👜','💐'];
+  for (let i = 0; i < 45; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-emoji';
+    el.textContent = confettis[Math.floor(Math.random()*confettis.length)];
+    el.style.cssText = `left:${Math.random()*100}%;animation-duration:${3+Math.random()*6}s;animation-delay:${Math.random()*6}s;font-size:${16+Math.random()*28}px;`;
+    screen.appendChild(el);
+  }
+}
+
+function spawnFloatingHearts() {
+  const screen = document.getElementById('birthdayScreen');
+  const hearts = ['❤️','💕','💖','💗','💓','💝','🌹','👜','✨','💎'];
+  function addHeart() {
+    const el = document.createElement('div');
+    el.className = 'heart-float';
+    el.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+    const x = 10 + Math.random() * 80;
+    const size = 18 + Math.random() * 28;
+    const dur = 2.5 + Math.random() * 3;
+    el.style.cssText = `left:${x}%;bottom:${10+Math.random()*20}%;font-size:${size}px;animation-duration:${dur}s;`;
+    screen.appendChild(el);
+    setTimeout(() => el.remove(), dur * 1000 + 500);
+  }
+  for (let i = 0; i < 12; i++) setTimeout(addHeart, i * 150);
+  const hi = setInterval(addHeart, 600);
+  setTimeout(() => clearInterval(hi), 20000);
+}
+
+function spawnGlowRings() {
+  const screen = document.getElementById('birthdayScreen');
+  function addRing() {
+    const ring = document.createElement('div');
+    ring.className = 'glow-ring';
+    const size = 80 + Math.random() * 120;
+    const x = 10 + Math.random() * 80;
+    const y = 10 + Math.random() * 80;
+    const dur = 1.8 + Math.random() * 1.2;
+    const colors = ['rgba(212,175,55,0.5)','rgba(255,133,161,0.5)','rgba(155,89,182,0.4)','rgba(247,231,206,0.4)'];
+    const color = colors[Math.floor(Math.random()*colors.length)];
+    ring.style.cssText = `width:${size}px;height:${size}px;left:calc(${x}% - ${size/2}px);top:calc(${y}% - ${size/2}px);border-color:${color};animation-duration:${dur}s;`;
+    screen.appendChild(ring);
+    setTimeout(() => ring.remove(), dur * 1000 + 200);
+  }
+  for (let i = 0; i < 5; i++) setTimeout(addRing, i * 300 + 500);
+  const ri = setInterval(addRing, 1200);
+  setTimeout(() => clearInterval(ri), 15000);
+}
+
+function startFireworks() {
+  const canvas = document.getElementById('fwCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  let particles = [], rockets = [];
+  const colors = ['#D4AF37','#FF85A1','#FF6B6B','#4ECDC4','#9B59B6','#F7E7CE','#ffffff','#FFD6E0','#E8CCFF','#FFE066'];
+
+  function Particle(x, y, color, vx, vy, size, decay) {
+    this.x=x; this.y=y; this.color=color;
+    this.vx=vx||((Math.random()-0.5)*14);
+    this.vy=vy||((Math.random()-0.5)*14-3);
+    this.alpha=1; this.radius=size||(Math.random()*4+1.5);
+    this.decay=decay||(Math.random()*0.018+0.007);
+    this.gravity=0.12; this.trail=[];
+  }
+  function Rocket(x) {
+    this.x=x; this.y=canvas.height;
+    this.vy=-(12+Math.random()*8);
+    this.targetY=80+Math.random()*(canvas.height*0.45);
+    this.color=colors[Math.floor(Math.random()*colors.length)];
+    this.exploded=false; this.trail=[];
+  }
+  function explode(x, y, color) {
+    const count = 100 + Math.floor(Math.random()*80);
+    for (let i=0; i<count; i++) particles.push(new Particle(x,y,color));
+    for (let i=0; i<30; i++) particles.push(new Particle(x,y,'#ffffff',(Math.random()-0.5)*20,(Math.random()-0.5)*20,1.5,0.04));
+    for (let i=0; i<24; i++) {
+      const angle=(i/24)*Math.PI*2, speed=6+Math.random()*4;
+      particles.push(new Particle(x,y,color,Math.cos(angle)*speed,Math.sin(angle)*speed,3,0.025));
+    }
+  }
+  function launchRocket() {
+    rockets.push(new Rocket(80 + Math.random()*(canvas.width-160)));
+  }
+  setTimeout(()=>{ explode(canvas.width*0.25,canvas.height*0.3,'#D4AF37'); explode(canvas.width*0.75,canvas.height*0.25,'#FF85A1'); explode(canvas.width*0.5,canvas.height*0.35,'#9B59B6'); }, 400);
+  setTimeout(()=>{ explode(canvas.width*0.15,canvas.height*0.4,'#4ECDC4'); explode(canvas.width*0.85,canvas.height*0.38,'#F7E7CE'); }, 900);
+  const ri = setInterval(launchRocket, 700);
+  setTimeout(()=>clearInterval(ri), 18000);
+  function hexToRgb(hex) {
+    if(hex[0]!=='#') return '255,255,255';
+    const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+    return `${r},${g},${b}`;
+  }
+  function animate() {
+    ctx.fillStyle='rgba(0,0,0,0.16)';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    rockets=rockets.filter(r=>!r.exploded);
+    rockets.forEach(r=>{
+      r.trail.push({x:r.x,y:r.y});
+      if(r.trail.length>8)r.trail.shift();
+      r.y+=r.vy; r.vy+=0.25;
+      r.trail.forEach((pt,i)=>{ ctx.beginPath(); ctx.arc(pt.x,pt.y,2,0,Math.PI*2); ctx.fillStyle=`rgba(212,175,55,${(i/r.trail.length)*0.6})`; ctx.fill(); });
+      ctx.beginPath(); ctx.arc(r.x,r.y,3,0,Math.PI*2); ctx.fillStyle=r.color; ctx.fill();
+      if(r.y<=r.targetY){explode(r.x,r.y,r.color);r.exploded=true;}
+    });
+    particles.forEach(p=>{
+      p.trail.push({x:p.x,y:p.y});
+      if(p.trail.length>4)p.trail.shift();
+      p.x+=p.vx; p.vy+=p.gravity; p.y+=p.vy;
+      p.alpha-=p.decay; p.vx*=0.97; p.vy*=0.97;
+      if(p.alpha>0){ ctx.beginPath(); ctx.arc(p.x,p.y,p.radius,0,Math.PI*2); ctx.fillStyle=`rgba(${hexToRgb(p.color)},${p.alpha})`; ctx.fill(); }
+    });
+    particles=particles.filter(p=>p.alpha>0);
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+// ===================== NOTIFICATIONS =====================
+let notifTimeout = null;
+function showNotif(msg) {
+  const existing = document.querySelector('.notif');
+  if (existing) existing.remove();
+  const n = document.createElement('div');
+  n.className = 'notif';
+  n.textContent = msg;
+  document.body.appendChild(n);
+  if (notifTimeout) clearTimeout(notifTimeout);
+  notifTimeout = setTimeout(() => n && n.remove(), 2600);
+}
+
+// ===================== INIT =====================
+window.onload = () => {
+  // Title stars
+  const bg = document.getElementById('titleStars');
+  for (let i=0;i<60;i++){
+    const s=document.createElement('div');
+    s.className='star-dot';
+    const sz=Math.random()*3+1;
+    s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${2+Math.random()*4}s;animation-delay:${Math.random()*4}s;background:rgba(212,175,55,${0.5+Math.random()*0.5});`;
+    bg.appendChild(s);
+  }
+  // Handle back button (Android)
+  window.addEventListener('popstate', () => {
+    const active = document.querySelector('.screen.active');
+    if (active && active.id === 'gameScreen') { pauseGame(); }
+    else if (active && active.id === 'pauseScreen') { resumeGame(); }
+    else showTitle();
+  });
+  window.history.pushState({}, '');
+};
+
+// Prevent accidental double-click zoom on mobile
+document.addEventListener('dblclick', e => e.preventDefault());
+</script>
+</body>
+</html>
