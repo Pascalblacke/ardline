@@ -395,6 +395,243 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 #stockArea::-webkit-scrollbar,#levelScroll::-webkit-scrollbar,.gift-card::-webkit-scrollbar,.workbench-grid::-webkit-scrollbar{width:4px;}
 #stockArea::-webkit-scrollbar-track,.gift-card::-webkit-scrollbar-track,.workbench-grid::-webkit-scrollbar-track{background:rgba(255,255,255,0.03);}
 #stockArea::-webkit-scrollbar-thumb,.gift-card::-webkit-scrollbar-thumb,.workbench-grid::-webkit-scrollbar-thumb{background:rgba(212,175,55,0.3);border-radius:2px;}
+
+/* ====================================================
+   RESPONSIVE MOBILE — Ardline Boutique
+   ==================================================== */
+
+/* --- Très petits écrans (≤360px) --- */
+@media (max-width:360px){
+  .title-logo{font-size:30px!important;}
+  .birthday-badge{font-size:12px;padding:7px 16px;}
+  #stockArea{width:100px!important;}
+  .powerup-btn{font-size:9px!important;padding:3px 6px!important;}
+  .hud-score{font-size:18px!important;}
+  .hud-btn{padding:4px 8px!important;font-size:11px!important;}
+}
+
+/* --- Mobile portrait (≤480px) --- */
+@media (max-width:480px){
+
+  /* === HUD : compacter tous les éléments === */
+  #hud{
+    padding:0 8px;
+    gap:6px;
+    height:clamp(50px,12vw,62px);
+  }
+  .hud-info{gap:3px;}
+  .hud-score{font-size:clamp(16px,5vw,22px)!important;}
+  #hudLevel{font-size:clamp(9px,2.5vw,11px)!important;}
+  #hudGoal{font-size:clamp(8px,2vw,10px)!important;}
+  .powerup-btn{
+    font-size:clamp(9px,2.5vw,11px)!important;
+    padding:4px 7px!important;
+    letter-spacing:-0.3px;
+  }
+  #hudTimer{font-size:clamp(13px,4vw,17px)!important;}
+  .hud-btn{font-size:clamp(11px,3vw,13px)!important;padding:4px 9px!important;}
+
+  /* === Zone de jeu : stock moins large === */
+  #gameArea{top:clamp(50px,12vw,62px);}
+  #stockArea{
+    width:clamp(95px,26vw,130px)!important;
+    padding:6px!important;
+    gap:5px!important;
+  }
+  .stock-title{font-size:clamp(11px,3vw,14px)!important;margin-bottom:1px;}
+  .stock-item{padding:6px 7px!important;gap:5px!important;}
+  .product-emoji{font-size:clamp(20px,5.5vw,26px)!important;}
+  .product-name{font-size:clamp(8px,2.3vw,11px)!important;}
+  .product-time{font-size:clamp(7px,1.8vw,9px)!important;}
+  .product-price{font-size:clamp(9px,2.3vw,11px)!important;}
+
+  /* === Panneau commande : mieux centré === */
+  #orderPanel{
+    left:4%!important;
+    right:4%!important;
+    transform:none!important;
+    min-width:unset!important;
+    max-width:92%!important;
+    bottom:8px!important;
+    padding:10px 12px!important;
+  }
+  #orderPanel h3{font-size:clamp(13px,3.8vw,17px)!important;margin-bottom:6px;}
+  .order-item{font-size:clamp(11px,3vw,13px)!important;padding:5px 9px!important;}
+  .order-btn-row{gap:6px;margin-top:8px;}
+
+  /* === Niveaux : grille 5 colonnes === */
+  .levels-grid{
+    grid-template-columns:repeat(5,1fr)!important;
+    gap:6px!important;
+  }
+  .level-btn{border-radius:10px!important;}
+  .level-btn .lvl-emoji{font-size:clamp(15px,4.5vw,22px)!important;}
+  .level-btn .lvl-num{font-size:clamp(9px,2.5vw,12px)!important;}
+  .level-btn .stars{font-size:clamp(6px,1.8vw,9px)!important;}
+  .level-header{padding:8px 12px!important;}
+  .level-title{font-size:clamp(18px,5.5vw,28px)!important;}
+
+  /* === Pause & Level Complete : cards ajustées === */
+  .pause-card,.complete-card{
+    padding:20px 18px!important;
+    border-radius:18px!important;
+  }
+  .pause-title{font-size:clamp(26px,7vw,36px)!important;}
+  .complete-title{font-size:clamp(22px,6.5vw,32px)!important;}
+  .complete-stars{font-size:clamp(28px,8vw,38px)!important;}
+  .complete-btn-row{gap:8px!important;}
+  .complete-btn-row .btn{
+    font-size:clamp(13px,3.5vw,16px)!important;
+    padding:10px 16px!important;
+  }
+  .pause-btn-col{gap:9px!important;}
+
+  /* === Dress Screen (Niveau 30) : layout vertical === */
+  .dress-main{
+    flex-direction:column!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    -webkit-overflow-scrolling:touch!important;
+    align-items:stretch!important;
+    gap:8px!important;
+    padding:8px 10px!important;
+  }
+
+  /* Liste des étapes en flex wrap horizontal */
+  .gift-card{
+    width:100%!important;
+    max-height:none!important;
+    overflow:visible!important;
+    flex-shrink:0;
+    padding:10px 12px!important;
+  }
+  .gift-title{font-size:clamp(13px,3.5vw,16px)!important;margin-bottom:6px!important;}
+  #giftSteps{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    gap:4px!important;
+  }
+  .gift-step{
+    flex:1 1 calc(50% - 4px)!important;
+    margin-bottom:0!important;
+    padding:5px 7px!important;
+  }
+  .step-text{font-size:clamp(9px,2.2vw,11px)!important;}
+  .step-emoji{font-size:clamp(14px,4vw,18px)!important;}
+  .step-num{width:20px!important;height:20px!important;font-size:10px!important;}
+
+  /* Grille des objets */
+  .dress-workbench{width:100%!important;overflow:visible!important;}
+  .workbench-grid{
+    grid-template-columns:repeat(4,1fr)!important;
+    gap:7px!important;
+    padding:10px!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  .choice-btn{padding:8px 4px!important;border-radius:10px!important;}
+  .choice-emoji{font-size:clamp(22px,6.5vw,32px)!important;}
+  .choice-name{font-size:clamp(7px,2vw,10px)!important;}
+
+  /* Aperçu cadeau : en ligne au lieu de colonne */
+  .preview-area{
+    flex-direction:row!important;
+    justify-content:center!important;
+    align-items:center!important;
+    gap:14px!important;
+    min-width:unset!important;
+    width:100%!important;
+    flex-shrink:0;
+    padding:10px 14px!important;
+  }
+  .outfit-build{font-size:clamp(36px,10vw,50px)!important;min-height:auto!important;}
+  #dressProgress{font-size:clamp(9px,2.5vw,12px)!important;}
+
+  .dress-action-row{gap:8px!important;margin-top:6px!important;}
+  .dress-action-btn{
+    font-size:clamp(12px,3.5vw,15px)!important;
+    padding:9px 16px!important;
+  }
+
+  .dress-hud{padding:8px 12px!important;}
+  .dress-hud-title{font-size:clamp(13px,3.8vw,17px)!important;}
+  .dress-timer-display{font-size:clamp(13px,3.5vw,17px)!important;padding:5px 12px!important;}
+
+  /* === Birthday Screen : espacements réduits === */
+  .birthday-content{
+    gap:4px!important;
+    padding:12px 14px!important;
+  }
+  .gift-big{font-size:clamp(50px,15vw,80px)!important;}
+  .birthday-title{font-size:clamp(38px,12vw,70px)!important;line-height:1!important;}
+  .birthday-num{font-size:clamp(65px,18vw,100px)!important;}
+  .birthday-message{font-size:clamp(16px,4.5vw,22px)!important;margin:4px 0!important;}
+  .birthday-sub{
+    font-size:clamp(11px,3vw,14px)!important;
+    line-height:1.6!important;
+    padding:10px 14px!important;
+    margin-bottom:10px!important;
+  }
+  .btn-replay{
+    font-size:clamp(13px,4vw,17px)!important;
+    padding:11px 28px!important;
+  }
+
+  /* === Combo display === */
+  .combo-display{
+    right:6px!important;
+    font-size:clamp(11px,3vw,14px)!important;
+    padding:4px 10px!important;
+  }
+}
+
+/* --- Mode paysage mobile (hauteur ≤500px) --- */
+@media (max-height:500px){
+
+  /* Dress screen : revenir en row car la hauteur est suffisante en landscape */
+  .dress-main{
+    flex-direction:row!important;
+    overflow-y:hidden!important;
+  }
+  .gift-card{
+    width:clamp(130px,32vw,180px)!important;
+    max-height:100%!important;
+    overflow-y:auto!important;
+  }
+  #giftSteps{display:block!important;}
+  .gift-step{flex:none!important;}
+  .preview-area{
+    flex-direction:column!important;
+    min-width:clamp(80px,20vw,110px)!important;
+    width:auto!important;
+  }
+  .workbench-grid{max-height:calc(100vh - 120px)!important;overflow-y:auto!important;}
+
+  /* Birthday : masquer le bloc texte, garder l'essentiel visible */
+  .birthday-content{gap:2px!important;padding:8px!important;}
+  .birthday-title{font-size:7vw!important;}
+  .birthday-num{font-size:12vw!important;}
+  .birthday-sub{
+    font-size:clamp(9px,1.8vw,12px)!important;
+    line-height:1.4!important;
+    padding:8px 12px!important;
+    margin-bottom:6px!important;
+  }
+  .gift-big{font-size:9vw!important;}
+  .birthday-message{margin:2px 0!important;}
+
+  /* HUD plus petit en landscape */
+  #hud{height:46px!important;}
+  #gameArea{top:46px!important;}
+}
+
+/* --- Tablette / grands mobiles (481px–768px) --- */
+@media (min-width:481px) and (max-width:768px){
+  .dress-main{gap:10px;padding:10px 14px;}
+  .gift-card{width:clamp(140px,32vw,200px);}
+  .levels-grid{grid-template-columns:repeat(6,1fr)!important;gap:8px!important;}
+  #stockArea{width:clamp(120px,28vw,170px);}
+}
 </style>
 </head>
 <body>
@@ -1480,6 +1717,29 @@ window.onload = () => {
 
 // Prevent accidental double-click zoom on mobile
 document.addEventListener('dblclick', e => e.preventDefault());
+
+// ===================== RESPONSIVE RESIZE =====================
+function handleResize() {
+  const canvas = document.getElementById('fwCanvas');
+  if (canvas && canvas.width > 0) {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  const panel = document.getElementById('orderPanel');
+  if (panel && panel.style.display !== 'none') {
+    if (window.innerWidth <= 480) {
+      panel.style.left = '4%';
+      panel.style.right = '4%';
+      panel.style.transform = 'none';
+    } else {
+      panel.style.left = '50%';
+      panel.style.right = '';
+      panel.style.transform = 'translateX(-50%)';
+    }
+  }
+}
+window.addEventListener('resize', handleResize);
+window.addEventListener('orientationchange', () => setTimeout(handleResize, 200));
 </script>
 </body>
 </html>
